@@ -16,35 +16,13 @@ fi
 export PATH="$HOME/.pyenv/bin:/usr/local/opt/python@2/libexec/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-alias mtr="sudo mtr"
-alias copyid="ssh-copy-id -i ~/.ssh/id_rsa"
-alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-fullBrewUpdate(){
-	brew update
-	brew cask update
-
-	casks=( $(brew cask list) )
-
-	for cask in ${casks[@]}
-	do
-		# in the first line there is version
-		current="$(brew cask info $cask | sed -n '1p' | sed -n 's/^.*: \(.*\)$/\1/p')"
-
-		installed=( $(ls /usr/local/Caskroom/$cask))
-		if (! [[ " ${installed[@]} " == *" $current "* ]]); then
-			(set -x; brew cask install $cask --force;)
-		fi
-	done
-
-	brew upgrade
-	brew cleanup
-}
-
 export LC_ALL=en_US.UTF-8
 export KEYTIMEOUT=1
+
+### Golang settings
 export GOPATH=$HOME/golang
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
@@ -59,32 +37,36 @@ function magnet-info() {
 	rm "$hash.torrent"
 }
 
-
+### Nice aliases
 alias docker_gc="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotify/docker-gc"
 alias flush_dns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder'
-alias grv='git review'
-alias https='http --default-scheme https'
 alias self_signed='openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes'
 alias unescape_html='python3 -c "import sys; import html; print(html.unescape(sys.stdin.read()))"'
 alias unset_docker='unset DOCKER_TLS_VERIFY DOCKER_HOST DOCKER_CERT_PATH DOCKER_MACHINE_NAME'
 alias vim=nvim
 alias zshconfig="nvim ~/.zshrc"
 alias top='top -o -cpu'
+alias mtr="sudo mtr"
+alias copyid="ssh-copy-id -i ~/.ssh/id_rsa"
+alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
 
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
+
+### Utility functions
 function ppjson() {
-	echo $1 | python -c "import json;import sys; print(json.dumps(json.loads(sys.stdin.read()), indent=4))" | pygmentize -l json
+	python3 -c "import json;import sys; print(json.dumps(json.loads(sys.stdin.read()), ensure_ascii=False, indent=4))" | pygmentize -l json
 }
 
-# Work related
+### Work related
 . ~/.zshrc_work
 . ~/.zshrc_private
 
 autoload -U +X bashcompinit && bashcompinit
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+### Spacheship configuration
 source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
 spaceship_docker() {
@@ -126,6 +108,8 @@ SPACESHIP_PROMPT_ORDER=(
 
 
 source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+
+### Miscellaneous
 KUBE_EDITOR=vim
 
 complete -o nospace -C /usr/local/bin/vault vault
