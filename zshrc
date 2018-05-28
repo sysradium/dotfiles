@@ -8,9 +8,9 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 source $ZSH/oh-my-zsh.sh
 
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+	export EDITOR='nvim'
 else
-  export EDITOR='vim'
+	export EDITOR='vim'
 fi
 
 export PATH="$HOME/.pyenv/bin:/usr/local/opt/python@2/libexec/bin:$PATH"
@@ -28,6 +28,11 @@ export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
+### Golang utils
+function go_coverage() {
+	tmp=$(mktemp)
+	go test -coverprofile=$tmp ./... && go tool cover -html=$tmp && rm $tmp
+}
 
 function magnet-info() {
 	hash=$(echo "$1" | ggrep -oP "(?<=btih:).*?(?=&)")
@@ -49,6 +54,7 @@ alias top='top -o -cpu'
 alias mtr="sudo mtr"
 alias copyid="ssh-copy-id -i ~/.ssh/id_rsa"
 alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
+alias consul="docker run --rm -p 8301:8301 -p 8302:8301 -p 8500:8500 -p 8600:8600 -p 8300:8300 consul"
 
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
@@ -59,10 +65,6 @@ function ppjson() {
 	python3 -c "import json;import sys; print(json.dumps(json.loads(sys.stdin.read()), ensure_ascii=False, indent=4))" | pygmentize -l json
 }
 
-### Work related
-. ~/.zshrc_work
-. ~/.zshrc_private
-
 autoload -U +X bashcompinit && bashcompinit
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -70,40 +72,41 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
 spaceship_docker() {
-  [[ $SPACESHIP_DOCKER_SHOW == false ]] && return
+	[[ $SPACESHIP_DOCKER_SHOW == false ]] && return
 
-  _exists docker || return
+	_exists docker || return
 
-  # Show Docker status only for Docker-specific folders
-  [[ -f Dockerfile || -f docker-compose.yml ]] || return
+	# Show Docker status only for Docker-specific folders
+	[[ -f Dockerfile || -f docker-compose.yml ]] || return
 
-  local docker_version=""
+	local docker_version=""
 
-  if [[ -n $DOCKER_MACHINE_NAME ]]; then
-    docker_version+="($DOCKER_MACHINE_NAME)"
-  else
-    docker_version+="(localhost)"
-  fi
+	if [[ -n $DOCKER_MACHINE_NAME ]]; then
+		docker_version+="($DOCKER_MACHINE_NAME)"
+	else
+		docker_version+="(localhost)"
+	fi
 
-  _prompt_section \
-    "$SPACESHIP_DOCKER_COLOR" \
-    "$SPACESHIP_DOCKER_PREFIX" \
-    "${SPACESHIP_DOCKER_SYMBOL} ${docker_version}" \
-    "$SPACESHIP_DOCKER_SUFFIX"
+	_prompt_section \
+		"$SPACESHIP_DOCKER_COLOR" \
+		"$SPACESHIP_DOCKER_PREFIX" \
+		"${SPACESHIP_DOCKER_SYMBOL} ${docker_version}" \
+		"$SPACESHIP_DOCKER_SUFFIX"
 }
 
 SPACESHIP_PROMPT_ORDER=(
-  time          # Time stampts section
-  user          # Username section
-  host          # Hostname section
-  dir           # Current directory section
-  git           # Git section (git_branch + git_status)
-  docker        # Docker section
-  pyenv         # Pyenv section
-  line_sep      # Line break
-  jobs          # Backgound jobs indicator
-  exit_code     # Exit code section
-  char          # Prompt character
+time          # Time stampts section
+user          # Username section
+host          # Hostname section
+dir           # Current directory section
+git           # Git section (git_branch + git_status)
+docker        # Docker section
+kubecontext
+pyenv         # Pyenv section
+line_sep      # Line break
+jobs          # Backgound jobs indicator
+exit_code     # Exit code section
+char          # Prompt character
 )
 
 
@@ -113,3 +116,8 @@ source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 KUBE_EDITOR=vim
 
 complete -o nospace -C /usr/local/bin/vault vault
+
+### Work related
+. ~/.zshrc_work
+. ~/.zshrc_private
+
