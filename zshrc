@@ -1,7 +1,7 @@
 export ZSH=~/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
-plugins=(python vagrant colorize sudo pip zsh_reload sudo git docker boot2docker docker-compose brew encode64 httpie osx heroku battery)
+plugins=(zsh-autosuggestions zsh-syntax-highlighting helm golang python colorize sudo pip zsh_reload sudo git docker docker-compose brew encode64 httpie osx kubectl)
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -55,9 +55,11 @@ alias mtr="sudo mtr"
 alias copyid="ssh-copy-id -i ~/.ssh/id_rsa"
 alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
 alias consul="docker run --rm -p 8301:8301 -p 8302:8301 -p 8500:8500 -p 8600:8600 -p 8300:8300 consul"
+alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p"'
 
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 
 
 ### Utility functions
@@ -67,9 +69,6 @@ function ppjson() {
 
 autoload -U +X bashcompinit && bashcompinit
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-### Spacheship configuration
-source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
 spaceship_docker() {
 	[[ $SPACESHIP_DOCKER_SHOW == false ]] && return
@@ -93,7 +92,6 @@ spaceship_docker() {
 		"${SPACESHIP_DOCKER_SYMBOL} ${docker_version}" \
 		"$SPACESHIP_DOCKER_SUFFIX"
 }
-
 SPACESHIP_PROMPT_ORDER=(
 time          # Time stampts section
 user          # Username section
@@ -110,14 +108,19 @@ char          # Prompt character
 )
 
 
-source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
-
-### Miscellaneous
-KUBE_EDITOR=vim
-
 complete -o nospace -C /usr/local/bin/vault vault
 
 ### Work related
 . ~/.zshrc_work
 . ~/.zshrc_private
 
+### Miscellaneous
+KUBE_EDITOR=nvim
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
+
+### Spacheship configuration
+SPACESHIP_BATTERY_SHOW=always
+source /usr/local/lib/node_modules/spaceship-prompt/spaceship.zsh

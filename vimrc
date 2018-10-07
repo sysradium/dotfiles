@@ -11,6 +11,12 @@ if &term =~ '256color'
 	set t_ut=
 endif
 
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 au BufRead,BufNewFile *.yml set filetype=ansible
