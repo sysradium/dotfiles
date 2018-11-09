@@ -1,7 +1,7 @@
 export ZSH=~/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
-plugins=(zsh-autosuggestions zsh-syntax-highlighting helm golang python colorize sudo pip zsh_reload sudo gitfast docker docker-compose brew encode64 httpie osx kubectl)
+plugins=(hub zsh-autosuggestions zsh-syntax-highlighting helm golang python colorize sudo pip zsh_reload sudo gitfast docker docker-compose brew encode64 httpie osx kubectl)
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -49,6 +49,7 @@ alias self_signed='openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.
 alias unescape_html='python3 -c "import sys; import html; print(html.unescape(sys.stdin.read()))"'
 alias unset_docker='unset DOCKER_TLS_VERIFY DOCKER_HOST DOCKER_CERT_PATH DOCKER_MACHINE_NAME'
 alias vim=nvim
+alias vi=nvim
 alias zshconfig="nvim ~/.zshrc"
 alias top='top -o -cpu'
 alias mtr="sudo mtr"
@@ -116,7 +117,7 @@ complete -o nospace -C /usr/local/bin/vault vault
 . ~/.zshrc_private
 
 ### Miscellaneous
-KUBE_EDITOR=nvim
+KUBE_EDITOR=vim
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit

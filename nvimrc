@@ -6,8 +6,7 @@ call plug#begin('~/.nvim/plugged')
 
 Plug 'Lokaltog/vim-easymotion'
 Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'SirVer/ultisnips'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
@@ -60,6 +59,7 @@ nnoremap <leader>x :bd<cr>
 tnoremap <Esc> <C-\><C-n>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
+
 " autocmd FileType * nested :call tagbar#autoopen(0)
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
 au FileType go nmap <leader>a :GoAlternate<cr>
@@ -97,6 +97,7 @@ set textwidth=120
 " Close the documentation window when completion is done
 " autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let g:UltiSnipsExpandTrigger="<c-s>"
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -109,6 +110,8 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 let g:echodoc_enable_at_startup = 1
 let g:go_def_mode = 'godef'
 let g:go_fmt_command = "goimports"
+let g:go_gocode_propose_builtins = 0
+let g:go_gocode_propose_source = 0
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -124,11 +127,10 @@ let g:jedi#completions_enabled = 1
 let g:jedi#force_py_version= "3"
 let g:jedi#smart_auto_mappings = 1
 let g:one_allow_italics = 1
+let g:onedark_terminal_italics = 1
 let g:pymode_indent = 0
 let g:python3_host_prog = '/Users/xenon/.pyenv/versions/neovim3/bin/python'
 let g:python3_host_skip_check = 1
 let g:python_host_prog = '/Users/xenon/.pyenv/versions/neovim3/bin/python'
 let g:tagbar_compact = 1
 let go_gocode_unimported_packages = 1
-let g:go_gocode_propose_builtins = 0
-let g:go_gocode_propose_source = 0
