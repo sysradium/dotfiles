@@ -1,6 +1,6 @@
 export ZSH=~/.oh-my-zsh
 
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 plugins=(hub zsh-autosuggestions zsh-syntax-highlighting helm golang python colorize sudo pip zsh_reload sudo gitfast docker docker-compose brew encode64 httpie osx kubectl)
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -49,7 +49,6 @@ alias self_signed='openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.
 alias unescape_html='python3 -c "import sys; import html; print(html.unescape(sys.stdin.read()))"'
 alias unset_docker='unset DOCKER_TLS_VERIFY DOCKER_HOST DOCKER_CERT_PATH DOCKER_MACHINE_NAME'
 alias vim=nvim
-alias vi=nvim
 alias zshconfig="nvim ~/.zshrc"
 alias top='top -o -cpu'
 alias mtr="sudo mtr"
@@ -57,6 +56,7 @@ alias copyid="ssh-copy-id -i ~/.ssh/id_rsa"
 alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
 alias consul="docker run --rm -p 8301:8301 -p 8302:8301 -p 8500:8500 -p 8600:8600 -p 8300:8300 consul"
 alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p"'
+alias ssh='TERM=xterm ssh'
 alias gphm='git push && hub pull-request -b master'
 
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
@@ -117,7 +117,7 @@ complete -o nospace -C /usr/local/bin/vault vault
 . ~/.zshrc_private
 
 ### Miscellaneous
-KUBE_EDITOR=vim
+export KUBE_EDITOR=nvim
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit

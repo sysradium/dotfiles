@@ -2,6 +2,10 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
+let g:ale_completion_enabled = 1
+let g:one_allow_italics = 1
+let g:onedark_terminal_italics = 1
+
 call plug#begin('~/.nvim/plugged')
 
 Plug 'Lokaltog/vim-easymotion'
@@ -22,7 +26,6 @@ Plug 'joshdick/onedark.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-github-dashboard.git'
 Plug 'majutsushi/tagbar'
 Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 Plug 'mhinz/vim-grepper'
@@ -41,6 +44,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'w0rp/ale'
+
 
 call plug#end()
 
@@ -101,15 +105,17 @@ let g:UltiSnipsExpandTrigger="<c-s>"
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:ale_completion_enabled = 1
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_go_golangci_lint_options = '--fast'
 let g:ale_go_golangci_lint_package = 1
-let g:ale_linters = {'go': ['golangci-lint', 'golint', 'golangserver', 'govet', 'gofmt']}
+let g:ale_lint_on_save = 1
+let g:ale_linters = {'go': ['golangserver', 'golangci-lint', 'golint', 'govet', 'gofmt'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
+let g:ale_python_pylint_options = '--disable=missing-docstring,too-few-public-methods,line-too-long,unused-argument,invalid-name'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard | grep -v vendor/']
 let g:echodoc_enable_at_startup = 1
-let g:go_def_mode = 'godef'
+let g:go_def_mode = 'guru'
 let g:go_fmt_command = "goimports"
+let g:go_fmt_options = {'gofmt': '-s'}
 let g:go_gocode_propose_builtins = 0
 let g:go_gocode_propose_source = 0
 let g:go_highlight_build_constraints = 1
@@ -126,8 +132,6 @@ let g:go_metalinter_disabled = ['gosec', 'gas', 'ineffassign', 'structcheck', 'v
 let g:jedi#completions_enabled = 1
 let g:jedi#force_py_version= "3"
 let g:jedi#smart_auto_mappings = 1
-let g:one_allow_italics = 1
-let g:onedark_terminal_italics = 1
 let g:pymode_indent = 0
 let g:python3_host_prog = '/Users/xenon/.pyenv/versions/neovim3/bin/python'
 let g:python3_host_skip_check = 1
