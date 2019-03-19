@@ -106,14 +106,17 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_go_golangci_lint_options = '--fast'
 let g:ale_go_golangci_lint_package = 1
 let g:ale_lint_on_save = 1
-let g:ale_linters = {'go': ['golangserver', 'golangci-lint', 'golint', 'govet', 'gofmt'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
+let g:ale_go_golangci_lint_options = '--enable-all -D unused -D lll -D dupl -D gochecknoglobals --exclude-use-default --skip-files=".*\.pb\.go"'
+" let g:ale_go_bingo_executable = 'bingo'
+let g:ale_linters = {'go': ['golangserver', 'golangci-lint', 'gofmt'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
 let g:ale_python_pylint_options = '--disable=missing-docstring,too-few-public-methods,line-too-long,unused-argument,invalid-name'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard | grep -v vendor/']
 let g:echodoc_enable_at_startup = 1
-let g:go_def_mode = 'guru'
+let g:go_def_mode = 'godef'
 let g:go_fmt_command = "goimports"
 let g:go_fmt_options = {'gofmt': '-s'}
 let g:go_gocode_propose_builtins = 0
