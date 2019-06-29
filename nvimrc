@@ -2,7 +2,7 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:one_allow_italics = 1
 let g:onedark_terminal_italics = 1
 
@@ -16,7 +16,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'buoto/gotests-vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'fatih/vim-go'
 Plug 'fisadev/vim-isort'
 Plug 'honza/vim-snippets'
@@ -44,6 +44,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 
 call plug#end()
@@ -97,6 +98,7 @@ set relativenumber number
 set smartcase             " unless I use an uppercase character
 set termguicolors
 set textwidth=120
+set shortmess+=c
 
 " Close the documentation window when completion is done
 " autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
@@ -105,18 +107,19 @@ let g:UltiSnipsExpandTrigger="<c-s>"
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_go_golangci_lint_package = 1
 let g:ale_lint_on_save = 1
 let g:ale_go_golangci_lint_options = '--enable-all -D unused -D lll -D dupl -D gochecknoglobals --exclude-use-default --skip-files=".*\.pb\.go"'
-" let g:ale_go_bingo_executable = 'bingo'
-let g:ale_linters = {'go': ['golangserver', 'golangci-lint', 'gofmt'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
+let g:ale_linters = {'go': ['golint', 'govet'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
 let g:ale_python_pylint_options = '--disable=missing-docstring,too-few-public-methods,line-too-long,unused-argument,invalid-name'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard | grep -v vendor/']
 let g:echodoc_enable_at_startup = 1
-let g:go_def_mode = 'godef'
+let g:go_def_mode = 'guru'
 let g:go_fmt_command = "goimports"
 let g:go_fmt_options = {'gofmt': '-s'}
 let g:go_gocode_propose_builtins = 0
@@ -141,3 +144,32 @@ let g:python3_host_skip_check = 1
 let g:python_host_prog = '/Users/xenon/.pyenv/versions/neovim3/bin/python'
 let g:tagbar_compact = 1
 let go_gocode_unimported_packages = 1
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+nmap <silent> gd <Plug>(coc-definition)
+
+nnoremap <leader>g :Grepper<cr>
+nmap <leader>rn <Plug>(coc-rename)
+
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+endfunction
