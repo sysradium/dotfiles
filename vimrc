@@ -61,7 +61,7 @@ Plugin 'rking/ag.vim'
 Plugin 'crusoexia/vim-monokai'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'fatih/vim-go'
-Plugin 'fisadev/vim-isort'
+"Plugin 'fisadev/vim-isort'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

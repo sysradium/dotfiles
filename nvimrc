@@ -4,48 +4,52 @@ endfunction
 
 let g:ale_completion_enabled = 0
 let g:one_allow_italics = 1
-let g:onedark_terminal_italics = 1
 
-call plug#begin('~/.nvim/plugged')
+call plug#begin(expand('~/.nvim/plugged'))
+
+set encoding=UTF-8
 
 Plug 'Lokaltog/vim-easymotion'
-Plug 'Shougo/echodoc.vim'
+"Plug 'Shougo/echodoc.vim'
 Plug 'SirVer/ultisnips'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'buoto/gotests-vim'
-Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'davidhalter/jedi-vim'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'fisadev/vim-isort'
 Plug 'honza/vim-snippets'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jodosha/vim-godebug'
-Plug 'joshdick/onedark.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'majutsushi/tagbar'
 Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 Plug 'mhinz/vim-grepper'
 Plug 'rakr/vim-one'
-Plug 'rizzatti/dash.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
-Plug 'sickill/vim-monokai'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tweekmonster/django-plus.vim'
-Plug 'uarun/vim-protobuf'
-Plug 'w0rp/ale'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-
+"Plug 'tweekmonster/django-plus.vim'
+"Plug 'uarun/vim-protobuf'
+Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'lewis6991/gitsigns.nvim'
+"Plug 'windwp/nvim-autopairs'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'kdheepak/lazygit.nvim'
+Plug 'j-hui/fidget.nvim'
 
 call plug#end()
 
@@ -55,14 +59,21 @@ nmap <silent> [g :tabprevious<CR>
 nmap <silent> ]g :tabnext<CR>
 nmap s <Plug>(easymotion-s2)
 nmap t <Plug>(easymotion-t2)
-nnoremap <leader>b :CtrlPBuffer<cr>
-nnoremap <leader>c :tabnew ~/.config/nvim/init.vim<cr>
-nnoremap <leader>nt :NERDTreeToggle<cr>
-nnoremap <leader>p :CtrlPBufTag<cr>
-nnoremap <leader>s :CtrlPBufTagAll<cr>
+nnoremap <leader>c :tabnew ~/.config/nvim/not-init.vim<cr>
+nnoremap <leader>nt :NvimTreeToggle<cr>
+"nnoremap <leader>b :CtrlPBuffer<cr>
+"nnoremap <leader>p :CtrlPBufTag<cr>
+"nnoremap <leader>s :CtrlPBufTagAll<cr>
 nnoremap <leader>x :bd<cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <silent> <leader>gg :LazyGit<CR>
+
 tnoremap <Esc> <C-\><C-n>
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
 
 " autocmd FileType * nested :call tagbar#autoopen(0)
@@ -83,7 +94,8 @@ autocmd FileType json setlocal shiftwidth=2 tabstop=2
 
 set tags+=doc/tags
 match ErrorMsg '\s\+$'
-colorscheme onedark
+
+colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 filetype plugin on
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
@@ -99,29 +111,26 @@ set smartcase             " unless I use an uppercase character
 set termguicolors
 set textwidth=120
 set shortmess+=c
+set timeoutlen=1000 ttimeoutlen=0
 
 " Close the documentation window when completion is done
 " autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:UltiSnipsExpandTrigger="<c-s>"
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+let g:airline_theme = 'catppuccin'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_go_golangci_lint_package = 1
 let g:ale_lint_on_save = 1
 let g:ale_go_golangci_lint_options = '--enable-all -D unused -D lll -D dupl -D gochecknoglobals --exclude-use-default --skip-files=".*\.pb\.go"'
-let g:ale_linters = {'go': ['golint', 'govet'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
+let g:ale_linters = {'go': ['staticcheck', 'govet'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
 let g:ale_python_pylint_options = '--disable=missing-docstring,too-few-public-methods,line-too-long,unused-argument,invalid-name'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard | grep -v vendor/']
 let g:echodoc_enable_at_startup = 1
-let g:go_def_mode = 'guru'
-let g:go_fmt_command = "goimports"
-let g:go_fmt_options = {'gofmt': '-s'}
 let g:go_gocode_propose_builtins = 0
 let g:go_gocode_propose_source = 0
 let g:go_highlight_build_constraints = 1
@@ -139,9 +148,9 @@ let g:jedi#completions_enabled = 1
 let g:jedi#force_py_version= "3"
 let g:jedi#smart_auto_mappings = 1
 let g:pymode_indent = 0
-let g:python3_host_prog = '/Users/xenon/.pyenv/versions/neovim3/bin/python'
 let g:python3_host_skip_check = 1
-let g:python_host_prog = '/Users/xenon/.pyenv/versions/neovim3/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python_host_prog = '/usr/local/bin/python3'
 let g:tagbar_compact = 1
 let go_gocode_unimported_packages = 1
 let g:go_def_mapping_enabled = 0
