@@ -2,7 +2,7 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-let g:ale_completion_enabled = 0
+"let g:ale_completion_enabled = 0
 let g:one_allow_italics = 1
 
 call plug#begin(expand('~/.nvim/plugged'))
@@ -35,7 +35,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 "Plug 'tweekmonster/django-plus.vim'
 "Plug 'uarun/vim-protobuf'
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'vim-airline/vim-airline-themes'
@@ -53,8 +53,8 @@ Plug 'j-hui/fidget.nvim'
 
 call plug#end()
 
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap)
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> [g :tabprevious<CR>
 nmap <silent> ]g :tabnext<CR>
 nmap s <Plug>(easymotion-s2)
@@ -116,20 +116,20 @@ set timeoutlen=1000 ttimeoutlen=0
 " Close the documentation window when completion is done
 " autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 let g:UltiSnipsExpandTrigger="<c-s>"
-let g:airline#extensions#ale#enabled = 1
+"let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 let g:airline_theme = 'catppuccin'
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_go_golangci_lint_package = 1
-let g:ale_lint_on_save = 1
-let g:ale_go_golangci_lint_options = '--enable-all -D unused -D lll -D dupl -D gochecknoglobals --exclude-use-default --skip-files=".*\.pb\.go"'
-let g:ale_linters = {'go': ['staticcheck', 'govet'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
-let g:ale_python_pylint_options = '--disable=missing-docstring,too-few-public-methods,line-too-long,unused-argument,invalid-name'
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
+"let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+"let g:ale_go_golangci_lint_package = 1
+"let g:ale_lint_on_save = 1
+"let g:ale_go_golangci_lint_options = '--enable-all -D unused -D lll -D dupl -D gochecknoglobals --exclude-use-default --skip-files=".*\.pb\.go"'
+"let g:ale_linters = {'go': ['staticcheck', 'govet'], 'python': ['flake8', 'mypy', 'pylint', 'pyls']}
+"let g:ale_python_pylint_options = '--disable=missing-docstring,too-few-public-methods,line-too-long,unused-argument,invalid-name'
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_enter = 0
 let g:echodoc_enable_at_startup = 1
 let g:go_gocode_propose_builtins = 0
 let g:go_gocode_propose_source = 0
