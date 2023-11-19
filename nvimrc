@@ -16,7 +16,7 @@ Plug 'SirVer/ultisnips'
 Plug 'bling/vim-airline'
 Plug 'buoto/gotests-vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'fisadev/vim-isort'
+"Plug 'fisadev/vim-isort'
 Plug 'honza/vim-snippets'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jodosha/vim-godebug'
@@ -155,17 +155,6 @@ let g:tagbar_compact = 1
 let go_gocode_unimported_packages = 1
 let g:go_def_mapping_enabled = 0
 let g:go_doc_keywordprg_enabled = 0
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-nmap <silent> gd <Plug>(coc-definition)
 
 nnoremap <leader>g :Grepper<cr>
 nmap <leader>rn <Plug>(coc-rename)
