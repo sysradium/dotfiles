@@ -24,25 +24,34 @@ require("nvim-tree").setup({
 
 
 require("catppuccin").setup({
-  flavour = "mocha", 
-  coc_nvim = true,
-  background = {
-    light = "latte",
-    dark = "mocha",
-  },
-  indent_blankline = {
-    enabled = true,
-    colored_indent_levels = false,
-  },
-  integrations = {
-    cmp = true,
-    gitsigns = true,
-    nvimtree = true,
-    telescope = true,
-    notify = false,
-    mini = false,
-  },
-})
+    flavour = "mocha",
+    coc_nvim = true,
+    background = {
+      light = "latte",
+      dark = "mocha",
+    },
+    indent_blankline = {
+      enabled = true,
+      colored_indent_levels = false,
+    },
+    integrations = {
+      cmp = true,
+      gitsigns = true,
+      nvimtree = true,
+      treesitter = true,
+      telescope = true,
+      notify = false,
+      mini = false,
+      coc_nvim = true,
+    },
+  })
+
+
+require('lualine').setup{
+  options = {
+    theme = "catppuccin"
+  }
+}
 
 require('gitsigns').setup()
 
@@ -113,3 +122,24 @@ end
 keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
 vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
+
+
+--- stuff --
+-- Normal mode mappings
+keyset('n', 's', '<Plug>(easymotion-s2)')
+keyset('n', 't', '<Plug>(easymotion-t2)')
+keyset('n', '<leader>c', ':tabnew ~/.config/nvim/not-init.vim<CR>')
+keyset('n', '<leader>nt', ':NvimTreeToggle<CR>')
+keyset('n', '<leader>x', ':bd<CR>')
+keyset('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
+keyset('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
+keyset('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
+keyset('n', '<leader>gg', ':LazyGit<CR>', { silent = true })
+
+-- Terminal mode mapping
+keyset('t', '<Esc>', '<C-\\><C-n>')
+
+-- Insert mode mappings
+keyset('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>" end, { expr = true })
+keyset('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>" end, { expr = true })
+keyset('i', '<CR>', function() return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>" end, { expr = true, silent = true })
