@@ -1,6 +1,9 @@
 local vimrc = vim.fn.stdpath("config") .. "/not-init.vim"
 vim.cmd.source(vimrc)
 
+require("plugins")
+require("treesitter")
+
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
