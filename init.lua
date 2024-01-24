@@ -159,3 +159,8 @@ keyset('n', '<leader>gg', ':LazyGit<CR>', { silent = true })
 
 -- Terminal mode mapping
 keyset('t', '<Esc>', '<C-\\><C-n>')
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    command = ":silent call CocAction('runCommand', 'editor.action.organizeImport')"
+})

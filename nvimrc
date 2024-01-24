@@ -40,18 +40,6 @@ set timeoutlen=1000 ttimeoutlen=0
 " autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 let g:UltiSnipsExpandTrigger="<c-s>"
 let g:echodoc_enable_at_startup = 1
-"let g:go_gocode_propose_builtins = 0
-"let g:go_gocode_propose_source = 0
-"let g:go_highlight_build_constraints = 1
-"let g:go_highlight_extra_types = 1
-"let g:go_highlight_fields = 1
-"let g:go_highlight_function_calls = 1
-"let g:go_highlight_functions = 1
-"let g:go_highlight_methods = 1
-"let g:go_highlight_operators = 1
-"let g:go_highlight_trailing_whitespace_error = 1
-"let g:go_highlight_types = 1
-"let g:go_info_mode = 'guru'
 let g:go_metalinter_disabled = ['gosec', 'gas', 'ineffassign', 'structcheck', 'varcheck', 'unconvert']
 let g:jedi#completions_enabled = 1
 let g:jedi#force_py_version= "3"
@@ -61,6 +49,3 @@ let g:python3_host_skip_check = 1
 let g:python3_host_prog = '/usr/local/bin/python3'
 let g:python_host_prog = '/usr/local/bin/python3'
 let g:tagbar_compact = 1
-let go_gocode_unimported_packages = 1
-let g:go_def_mapping_enabled = 0
-let g:go_doc_keywordprg_enabled = 0

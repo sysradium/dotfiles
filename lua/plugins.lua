@@ -3,7 +3,6 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use 'nvim-telescope/telescope.nvim'
---	use 'mhinz/vim-grepper'
 	use 'rakr/vim-one'
 	use 'sheerun/vim-polyglot'
 	use 'tmux-plugins/vim-tmux-focus-events'
@@ -36,10 +35,6 @@ return require('packer').startup(function(use)
 	use {
 		'williamboman/mason.nvim', 
 		run= ':MasonUpdate' 
-	}
-
-	use { 'fatih/vim-go', 
-		run = ':GoUpdateBinaries'
 	}
 
 	use { "catppuccin/nvim", as = "catppuccin" }
