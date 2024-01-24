@@ -95,10 +95,26 @@ function _G.check_back_space()
     return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
 end
 
+-- Use Tab for trigger completion with characters ahead and navigate
+-- NOTE: There's always a completion item selected by default, you may want to enable
+-- no select by setting `"suggest.noselect": true` in your configuration file
+-- NOTE: Use command ':verbose imap <tab>' to make sure Tab is not mapped by
+-- other plugins before putting this into your config
+local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+
 keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+
+-- Make <CR> to accept selected completion item or notify coc.nvim to format
+-- <C-g>u breaks current undo, please make your own choice
+keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+
+-- Use <c-j> to trigger snippets
+keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
 
 -- Highlight the symbol and its references on a CursorHold event(cursor is idle)
 vim.api.nvim_create_augroup("CocGroup", {})
@@ -126,6 +142,8 @@ vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}"
 
 --- stuff --
 -- Normal mode mappings
+keyset('n', ']g', ':tabprevious<CR>')
+keyset('n', '[g', ':tabnext<CR>')
 keyset('n', 's', '<Plug>(easymotion-s2)')
 keyset('n', 't', '<Plug>(easymotion-t2)')
 keyset('n', '<leader>c', ':tabnew ~/.config/nvim/not-init.vim<CR>')
@@ -138,8 +156,3 @@ keyset('n', '<leader>gg', ':LazyGit<CR>', { silent = true })
 
 -- Terminal mode mapping
 keyset('t', '<Esc>', '<C-\\><C-n>')
-
--- Insert mode mappings
-keyset('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>" end, { expr = true })
-keyset('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>" end, { expr = true })
-keyset('i', '<CR>', function() return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>" end, { expr = true, silent = true })

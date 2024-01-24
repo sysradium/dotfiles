@@ -5,11 +5,11 @@ endfunction
 "let g:ale_completion_enabled = 0
 let g:one_allow_italics = 1
 
-call plug#begin(expand('~/.nvim/plugged'))
-
 set encoding=UTF-8
 
-Plug 'Lokaltog/vim-easymotion'
+call plug#begin(expand('~/.nvim/plugged'))
+
+"Plug 'Lokaltog/vim-easymotion'
 "Plug 'Shougo/echodoc.vim'
 Plug 'SirVer/ultisnips'
 "Plug 'airblade/vim-gitgutter'
@@ -117,17 +117,3 @@ let g:go_def_mapping_enabled = 0
 let g:go_doc_keywordprg_enabled = 0
 
 nnoremap <leader>g :Grepper<cr>
-nmap <leader>rn <Plug>(coc-rename)
-
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
-endfunction
