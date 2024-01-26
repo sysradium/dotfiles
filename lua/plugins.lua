@@ -41,4 +41,5 @@ return require('packer').startup(function(use)
 	use { 'neoclide/coc.nvim', branch = 'release' }
 	use { 'junegunn/fzf', run = ":call fzf#install()" }
 	use { 'junegunn/fzf.vim' }
+	use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 end)
