@@ -3,6 +3,7 @@ vim.cmd.source(vimrc)
 
 require("plugins")
 require("treesitter")
+require("lsp_config")
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1

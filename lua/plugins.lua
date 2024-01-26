@@ -33,8 +33,9 @@ return require('packer').startup(function(use)
 	}
 
 	use {
-		'williamboman/mason.nvim', 
-		run= ':MasonUpdate' 
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
 	}
 
 	use { "catppuccin/nvim", as = "catppuccin" }
