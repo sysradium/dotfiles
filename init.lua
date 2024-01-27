@@ -47,6 +47,7 @@ require("catppuccin").setup({
 
 local mocha = require("catppuccin.palettes").get_palette "mocha"
 require("bufferline").setup {
+    options = {diagnostics = "nvim_lsp"},
     highlights = require("catppuccin.groups.integrations.bufferline").get {
         styles = {"italic", "bold"},
         custom = {
