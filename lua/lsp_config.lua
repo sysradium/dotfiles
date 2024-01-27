@@ -5,7 +5,7 @@ end
 
 require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = {},
+    ensure_installed = {'gopls', 'pylsp'},
     handlers = {default_setup}
 })
 
@@ -107,7 +107,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
-require("luasnip.loaders.from_vscode").load({include = {"go"}})
+require("luasnip.loaders.from_vscode").load({include = {"go", "python"}})
 
 vim.lsp.handlers['textDocument/hover'] =
     vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'})

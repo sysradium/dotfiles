@@ -3,7 +3,8 @@ require("formatter").setup {
         go = {require("formatter.filetypes.go").goimports},
         lua = {require("formatter.filetypes.lua").luaformat},
         typescript = {require("formatter.filetypes.typescript").prettier},
-        typescriptreact = {require("formatter.filetypes.typescript").prettier}
+        typescriptreact = {require("formatter.filetypes.typescript").prettier},
+        python = {require("formatter.filetypes.python").black}
     }
 }
 
