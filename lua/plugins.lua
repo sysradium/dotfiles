@@ -16,8 +16,6 @@ return require('packer').startup(function(use)
     use 'Lokaltog/vim-easymotion'
     use 'kdheepak/lazygit.nvim'
     use 'nvim-lua/plenary.nvim'
-    use 'honza/vim-snippets'
-    use 'SirVer/ultisnips'
     use 'jodosha/vim-godebug'
     use 'junegunn/vim-easy-align'
     use 'nvim-tree/nvim-web-devicons'
