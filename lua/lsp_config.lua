@@ -1,11 +1,28 @@
-require("mason").setup()
-require("mason-lspconfig").setup()
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+local default_setup = function(server)
+    require('lspconfig')[server].setup({capabilities = lsp_capabilities})
+end
+
+require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = {},
+    handlers = {default_setup}
+})
+
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+
+vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
 
 local luasnip = require('luasnip')
 local cmp = require 'cmp'
 local select_opts = {behavior = cmp.SelectBehavior.Select}
 
 cmp.setup {
+    confirmation = {completeopt = 'menu,menuone,noinsert'},
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered()
@@ -66,13 +83,8 @@ cmp.setup {
 }
 
 vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    desc = 'LSP actions',
     callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = {buffer = ev.buf}
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -94,16 +106,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
                        function() vim.lsp.buf.format {async = true} end, opts)
     end
 })
-
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {capabilities = capabilities}
-lspconfig.tsserver.setup {capabilities = capabilities}
-lspconfig.gopls.setup {capabilities = capabilities}
-
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 require("luasnip.loaders.from_vscode").load({include = {"go"}})
 

@@ -17,9 +17,7 @@ return require('packer').startup(function(use)
     use 'kdheepak/lazygit.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'honza/vim-snippets'
-    use 'buoto/gotests-vim'
     use 'SirVer/ultisnips'
-    use 'hynek/vim-python-pep8-indent'
     use 'jodosha/vim-godebug'
     use 'junegunn/vim-easy-align'
     use 'nvim-tree/nvim-web-devicons'
@@ -71,5 +69,10 @@ return require('packer').startup(function(use)
         config = function()
             require'alpha'.setup(require'alpha.themes.startify'.config)
         end
+    }
+    use {
+        'yanskun/gotests.nvim',
+        ft = 'go',
+        config = function() require('gotests').setup() end
     }
 end)
