@@ -33,8 +33,9 @@ require("catppuccin").setup({
     }
 })
 
-vim.api.nvim_set_hl(0, 'LineNrAbove', {fg = '#a6adc8', bold = true})
-vim.api.nvim_set_hl(0, 'LineNr', {fg = '#f9e2af', bold = true})
-vim.api.nvim_set_hl(0, 'LineNrBelow', {fg = '#cdd6f4', bold = true})
+vim.api.nvim_set_hl(0, 'LineNrAbove',
+                    {fg = '#8c92a8', italic = true, bold = false})
+vim.api.nvim_set_hl(0, 'LineNr', {fg = '#f9e2af', bold = false})
+vim.api.nvim_set_hl(0, 'LineNrBelow', {fg = '#b6bed9', bold = false})
 vim.api.nvim_set_hl(0, "Normal", {bg = "none"})
 vim.api.nvim_set_hl(0, "NormalFloating", {bg = "none"})
