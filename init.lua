@@ -13,9 +13,16 @@ vim.opt.relativenumber = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.incsearch = true
-vim.opt.hlsearch = true
+vim.opt.hlsearch = false
 vim.opt.scrolloff = 8
 vim.opt.colorcolumn = "120"
+vim.o.mouse = 'a'
+vim.o.clipboard = 'unnamedplus'
+vim.o.breakindent = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.wo.signcolumn = 'yes'
+vim.o.completeopt = 'menuone,noselect'
 
 local mocha = require("catppuccin.palettes").get_palette "mocha"
 require("bufferline").setup {
@@ -47,6 +54,7 @@ require"fidget".setup {}
 require("telescope").setup {
     defaults = {file_ignore_patterns = {"vendor/", "gen/"}}
 }
+pcall(require('telescope').load_extension, 'fzf')
 
 -- Some servers have issues with backup files, see #649
 vim.opt.backup = false
@@ -72,3 +80,11 @@ keyset('n', '<leader>gg', ':LazyGit<CR>', {silent = true})
 
 -- Terminal mode mapping
 keyset('t', '<Esc>', '<C-\\><C-n>')
+
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight',
+                                                    {clear = true})
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function() vim.highlight.on_yank() end,
+    group = highlight_group,
+    pattern = '*'
+})

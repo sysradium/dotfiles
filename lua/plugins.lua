@@ -4,7 +4,6 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'nvim-telescope/telescope.nvim'
     use 'rakr/vim-one'
-    use 'sheerun/vim-polyglot'
     use 'tmux-plugins/vim-tmux-focus-events'
     use 'tpope/vim-fugitive'
     use 'tpope/vim-obsession'
@@ -71,4 +70,14 @@ return require('packer').startup(function(use)
         ft = 'go',
         config = function() require('gotests').setup() end
     }
+    use 'tpope/vim-sleuth'
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+            require("which-key").setup {}
+        end
+    }
+    use 'folke/neodev.nvim'
 end)
