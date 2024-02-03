@@ -109,7 +109,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
-require("luasnip.loaders.from_vscode").load({include = {"go", "python"}})
+require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.lsp.handlers['textDocument/hover'] =
     vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'})
