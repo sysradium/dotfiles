@@ -21,31 +21,31 @@ return require('packer').startup(function(use)
     use 'nvim-lualine/lualine.nvim'
     use 'j-hui/fidget.nvim'
     use {
-        "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
+        'windwp/nvim-autopairs',
+        config = function() require('nvim-autopairs').setup {} end
     }
 
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use 'nvim-treesitter/nvim-treesitter-context'
 
     use({
-        "L3MON4D3/LuaSnip",
-        tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-        run = "make install_jsregexp"
+        'L3MON4D3/LuaSnip',
+        tag = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        run = 'make install_jsregexp'
     })
-    use "saadparwaiz1/cmp_luasnip"
+    use 'saadparwaiz1/cmp_luasnip'
 
     use {
-        "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig"
+        'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim',
+        'neovim/nvim-lspconfig'
     }
 
-    use {"catppuccin/nvim", as = "catppuccin"}
-    use {'junegunn/fzf', run = ":call fzf#install()"}
+    use {'catppuccin/nvim', as = 'catppuccin'}
+    use {'junegunn/fzf', run = ':call fzf#install()'}
     use {'junegunn/fzf.vim'}
     use {
         'akinsho/bufferline.nvim',
-        tag = "*",
+        tag = '*',
         requires = 'nvim-tree/nvim-web-devicons'
     }
 
@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lsp-signature-help'
-    use "rafamadriz/friendly-snippets"
+    use 'rafamadriz/friendly-snippets'
     use {'mhartington/formatter.nvim'}
 
     use {
@@ -72,11 +72,11 @@ return require('packer').startup(function(use)
     }
     use 'tpope/vim-sleuth'
     use {
-        "folke/which-key.nvim",
+        'folke/which-key.nvim',
         config = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
-            require("which-key").setup {}
+            require('which-key').setup {}
         end
     }
     use 'folke/neodev.nvim'
