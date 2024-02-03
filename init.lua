@@ -66,6 +66,8 @@ vim.opt.updatetime = 80
 
 local keyset = vim.keymap.set
 -- Normal mode mappings
+keyset('n', ']q', ':cnext<CR>')
+keyset('n', '[q', ':cprev<CR>')
 keyset('n', ']b', ':bn<CR>')
 keyset('n', '[b', ':bp<CR>')
 keyset('n', 's', '<Plug>(easymotion-s2)')
