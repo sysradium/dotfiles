@@ -80,3 +80,5 @@ if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-clo
 
 source "/usr/local/opt/spaceship/spaceship.zsh"
 export SPACESHIP_CONFIG="$HOME/.config/spaceship.zsh"
+
+export BAT_THEME="Catppuccin-mocha"
