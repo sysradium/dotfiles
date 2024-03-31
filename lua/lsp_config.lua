@@ -24,11 +24,12 @@ local cmp = require 'cmp'
 local select_opts = {behavior = cmp.SelectBehavior.Select}
 
 cmp.setup {
-    confirmation = {completeopt = 'menu,menuone,noinsert'},
+    confirmation = {completeopt = 'menu,menuone,noinsert,noselect'},
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered()
     },
+    preselect = cmp.PreselectMode.None,
     formatting = {
         fields = {'menu', 'abbr', 'kind'},
         format = function(entry, item)
@@ -74,7 +75,7 @@ cmp.setup {
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({select = true}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({select = false}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = {
         {name = 'nvim_lsp_signature_help'},

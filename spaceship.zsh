@@ -11,3 +11,4 @@ spaceship remove docker
 spaceship add docker_context
 
 spaceship add kubectl
+spaceship add python
