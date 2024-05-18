@@ -4,7 +4,6 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'nvim-telescope/telescope.nvim'
     use 'rakr/vim-one'
-    use 'tmux-plugins/vim-tmux-focus-events'
     use 'tpope/vim-fugitive'
     use 'tpope/vim-obsession'
     use 'tpope/vim-repeat'
