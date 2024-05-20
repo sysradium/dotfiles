@@ -29,7 +29,7 @@ return require('packer').startup(function(use)
 
     use({
         'L3MON4D3/LuaSnip',
-        tag = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        tag = '*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         run = 'make install_jsregexp'
     })
     use 'saadparwaiz1/cmp_luasnip'

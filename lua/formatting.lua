@@ -7,6 +7,7 @@ require("formatter").setup {
         typescriptreact = {require("formatter.filetypes.typescript").prettier},
         python = {require("formatter.filetypes.python").black},
         sh = {require("formatter.filetypes.sh").shfmt},
+        json = {require("formatter.filetypes.json").jq},
         ["*"] = {require("formatter.filetypes.any").remove_trailing_whitespace}
     }
 }
