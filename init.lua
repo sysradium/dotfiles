@@ -3,6 +3,7 @@ require("treesitter")
 require("lsp_config")
 require("formatting")
 require("colorscheme")
+require("command")
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1

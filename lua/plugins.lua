@@ -85,4 +85,6 @@ return require('packer').startup(function(use)
     vim.api.nvim_create_autocmd({"BufWritePost"}, {
         callback = function() require("lint").try_lint() end
     })
+
+    use {'VonHeikemen/fine-cmdline.nvim', requires = {{'MunifTanjim/nui.nvim'}}}
 end)
