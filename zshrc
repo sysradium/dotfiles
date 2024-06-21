@@ -1,7 +1,7 @@
 export ZSH=~/.oh-my-zsh
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(helm golang python colorize sudo pip sudo git gitfast docker docker-compose brew encode64 httpie kubectl) 
+plugins=(colorize helm golang python colorize sudo pip sudo git gitfast docker docker-compose brew encode64 httpie kubectl) 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="$PATH:~/.local/bin"
 
