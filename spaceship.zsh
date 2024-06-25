@@ -1,6 +1,6 @@
 SPACESHIP_DIR_TRUNC_REPO=false
 
-DISABLED_SECTIONS=("azure" "bun" "conda""crystal" "dart" "deno" "dotnet" "elixit" "elm" "erlang" "gcloud" "imbcloud" "java" "lua" "mercurial" "ocaml" "perl" "php" "palumni" "rust" "scala" "swift" "zig")
+DISABLED_SECTIONS=("golang" "azure" "bun" "conda""crystal" "dart" "deno" "dotnet" "elixit" "elm" "erlang" "gcloud" "imbcloud" "java" "lua" "mercurial" "ocaml" "perl" "php" "palumni" "rust" "scala" "swift" "zig")
 for section in "${DISABLED_SECTIONS[@]}"; do
 	spaceship remove $section
 done
