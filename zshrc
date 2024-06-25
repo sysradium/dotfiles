@@ -1,7 +1,7 @@
 export ZSH=~/.oh-my-zsh
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(colorize helm golang python colorize sudo pip sudo git gitfast docker docker-compose brew encode64 httpie kubectl) 
+plugins=(fzf-tab colorize helm golang python colorize sudo pip sudo git gitfast docker docker-compose brew encode64 httpie kubectl)
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="$PATH:~/.local/bin"
 
@@ -16,7 +16,8 @@ fi
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh)"
 
 export LC_ALL=en_US.UTF-8
 export KEYTIMEOUT=1
@@ -82,3 +83,6 @@ source "/usr/local/opt/spaceship/spaceship.zsh"
 export SPACESHIP_CONFIG="$HOME/.config/spaceship.zsh"
 
 export BAT_THEME="Catppuccin-mocha"
+eval "$(zoxide init zsh)"
+
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
