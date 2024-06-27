@@ -1,13 +1,13 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require("config.lazy")
 require("plugins")
 require("treesitter")
 require("lsp_config")
 require("formatting")
 require("colorscheme")
-
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -95,7 +95,7 @@ require("noice").setup({
         },
         popupmenu = {
             relative = "editor",
-            position = {row = 20, col = "50%"},
+            position = {row = 27, col = "50%"},
             size = {width = 60, height = 10},
             border = {style = "rounded", padding = {0, 0}},
             win_options = {
