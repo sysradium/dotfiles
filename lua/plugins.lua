@@ -26,10 +26,6 @@ return {
         config = function()
             require'alpha'.setup(require'alpha.themes.startify'.config)
         end
-    }, {
-        'yanskun/gotests.nvim',
-        ft = 'go',
-        config = function() require('gotests').init() end
     }, 'tpope/vim-sleuth', {
         "folke/which-key.nvim",
         event = "VeryLazy",
