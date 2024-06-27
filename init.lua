@@ -1,3 +1,4 @@
+require("config.lazy")
 require("plugins")
 require("treesitter")
 require("lsp_config")
@@ -23,29 +24,8 @@ vim.o.smartcase = true
 vim.wo.signcolumn = 'yes'
 vim.o.completeopt = 'menuone,noselect'
 
-local mocha = require("catppuccin.palettes").get_palette "mocha"
-require("bufferline").setup {
-    options = {diagnostics = "nvim_lsp"},
-    highlights = require("catppuccin.groups.integrations.bufferline").get {
-        styles = {"italic", "bold"},
-        custom = {
-            all = {fill = {bg = "#000000"}},
-            mocha = {background = {fg = mocha.text}},
-            latte = {background = {fg = "#000000"}}
-        }
-    }
-}
-
--- empty setup using defaults
-require("nvim-tree").setup({
-    sort_by = "case_sensitive",
-    view = {width = 30},
-    renderer = {group_empty = true},
-    filters = {dotfiles = false}
-})
-
 require('treesitter-context').setup {}
-require('lualine').setup {options = {theme = "catppuccin"}}
+
 require('gitsigns').setup()
 require("ibl").setup()
 require('nvim-web-devicons').setup {color_icons = true, default = true}
@@ -87,4 +67,46 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end,
     group = highlight_group,
     pattern = '*'
+})
+
+require('lint').linters_by_ft = {go = {'golangcilint'}}
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+    callback = function() require("lint").try_lint() end
+})
+require("notify").setup({background_colour = "#000000"})
+require("noice").setup({
+    lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true -- dependencies hrsh7th/nvim-cmp
+        }
+    },
+    views = {
+        cmdline_popup = {
+            border = {style = "rounded", padding = {0, 0}},
+            filter_options = {},
+            position = {row = 17, col = "50%"},
+            size = {width = 60},
+            win_options = {
+                winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder"
+            }
+        },
+        popupmenu = {
+            relative = "editor",
+            position = {row = 20, col = "50%"},
+            size = {width = 60, height = 10},
+            border = {style = "rounded", padding = {0, 0}},
+            win_options = {
+                winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder"
+            }
+        },
+        presets = {
+            bottom_search = true, -- use a classic bottom cmdline for search
+            long_message_to_split = true, -- long messages will be sent to a split
+            inc_rename = false, -- enables an input dialog for inc-rename.nvim
+            lsp_doc_border = false -- add a border to hover docs and signature help
+        }
+    }
 })
