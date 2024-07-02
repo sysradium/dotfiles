@@ -26,7 +26,6 @@ vim.wo.signcolumn = 'yes'
 vim.o.completeopt = 'menuone,noselect'
 
 require('treesitter-context').setup {}
-
 require('gitsigns').setup()
 require("ibl").setup()
 require('nvim-web-devicons').setup {color_icons = true, default = true}
@@ -35,7 +34,7 @@ require("telescope").setup {
     defaults = {file_ignore_patterns = {"vendor/", "gen/"}}
 }
 pcall(require('telescope').load_extension, 'fzf')
-
+require'navigator'.setup()
 -- Some servers have issues with backup files, see #649
 vim.opt.backup = false
 vim.opt.writebackup = false
@@ -76,14 +75,7 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
 })
 require("notify").setup({background_colour = "#000000"})
 require("noice").setup({
-    lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true -- dependencies hrsh7th/nvim-cmp
-        }
-    },
+    lsp = {hover = {enabled = false}},
     views = {
         cmdline_popup = {
             border = {style = "rounded", padding = {0, 0}},

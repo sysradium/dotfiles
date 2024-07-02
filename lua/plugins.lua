@@ -1,6 +1,21 @@
 return {
-    -- 'wbthomason/packer.nvim',
-    'nvim-telescope/telescope.nvim', 'rakr/vim-one', 'tpope/vim-fugitive',
+    {
+        'ray-x/navigator.lua',
+        dependencies = {
+            {'ray-x/guihua.lua', build = 'cd lua/fzy && make'},
+            {'neovim/nvim-lspconfig'}
+        }
+    }, {
+        "ray-x/go.nvim",
+        dependencies = { -- optional packages
+            "ray-x/guihua.lua", "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter"
+        },
+        config = function() require("go").setup() end,
+        event = {"CmdlineEnter"},
+        ft = {"go", 'gomod'},
+        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    }, 'nvim-telescope/telescope.nvim', 'rakr/vim-one', 'tpope/vim-fugitive',
     'tpope/vim-obsession', 'tpope/vim-repeat', 'tpope/vim-surround',
     'lewis6991/gitsigns.nvim', 'lukas-reineke/indent-blankline.nvim',
     'Lokaltog/vim-easymotion', 'kdheepak/lazygit.nvim', 'nvim-lua/plenary.nvim',
@@ -39,14 +54,8 @@ return {
     'rcarriga/nvim-notify', {
         "folke/noice.nvim",
         event = "VeryLazy",
-        opts = {
-            -- add any options here
-        },
         dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim", -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
             "rcarriga/nvim-notify"
         }
     }
