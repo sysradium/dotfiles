@@ -34,7 +34,7 @@ require("telescope").setup {
     defaults = {file_ignore_patterns = {"vendor/", "gen/"}}
 }
 pcall(require('telescope').load_extension, 'fzf')
-require'navigator'.setup()
+require'navigator'.setup({main = true})
 -- Some servers have issues with backup files, see #649
 vim.opt.backup = false
 vim.opt.writebackup = false
