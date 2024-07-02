@@ -1,5 +1,4 @@
 -- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
 vim.cmd.colorscheme "catppuccin-mocha"
 
 require("catppuccin").setup({

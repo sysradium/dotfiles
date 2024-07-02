@@ -1,6 +1,8 @@
 export ZSH=~/.oh-my-zsh
 
 
+eval "$(starship init zsh)"
+
 # History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -93,8 +95,8 @@ if [ -f "$HOME/yandex-cloud/path.bash.inc" ]; then source "$HOME/yandex-cloud/pa
 # The next line enables shell command completion for yc.
 if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-cloud/completion.zsh.inc"; fi
 
-source "/usr/local/opt/spaceship/spaceship.zsh"
-export SPACESHIP_CONFIG="$HOME/.config/spaceship.zsh"
+#source "/usr/local/opt/spaceship/spaceship.zsh"
+#export SPACESHIP_CONFIG="$HOME/.config/spaceship.zsh"
 
 export BAT_THEME="Catppuccin-mocha"
 eval "$(zoxide init zsh)"
