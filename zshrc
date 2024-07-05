@@ -1,6 +1,5 @@
 export ZSH=~/.oh-my-zsh
 
-
 eval "$(starship init zsh)"
 
 # History
