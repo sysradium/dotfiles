@@ -14,12 +14,12 @@ return {
         event = {"CmdlineEnter"},
         ft = {"go", 'gomod'},
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-    }, 'nvim-telescope/telescope.nvim', 'rakr/vim-one', 'tpope/vim-fugitive',
-    'tpope/vim-obsession', 'tpope/vim-repeat', 'tpope/vim-surround',
-    'lewis6991/gitsigns.nvim', 'lukas-reineke/indent-blankline.nvim',
-    'Lokaltog/vim-easymotion', 'kdheepak/lazygit.nvim', 'nvim-lua/plenary.nvim',
-    'jodosha/vim-godebug', 'junegunn/vim-easy-align',
-    'nvim-tree/nvim-web-devicons', 'j-hui/fidget.nvim',
+    }, 'nvim-telescope/telescope.nvim', 'rakr/vim-one', 'tpope/vim-obsession',
+    'tpope/vim-repeat', 'tpope/vim-surround', 'lewis6991/gitsigns.nvim',
+    'lukas-reineke/indent-blankline.nvim', 'Lokaltog/vim-easymotion',
+    'kdheepak/lazygit.nvim', 'nvim-lua/plenary.nvim', 'jodosha/vim-godebug',
+    'junegunn/vim-easy-align', 'nvim-tree/nvim-web-devicons',
+    'j-hui/fidget.nvim',
     {'windwp/nvim-autopairs', event = "InsertEnter", config = true},
     {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
     'nvim-treesitter/nvim-treesitter-context', {
