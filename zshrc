@@ -95,8 +95,7 @@ if [ -f "$HOME/yandex-cloud/path.bash.inc" ]; then source "$HOME/yandex-cloud/pa
 # The next line enables shell command completion for yc.
 if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-cloud/completion.zsh.inc"; fi
 
-#source "/usr/local/opt/spaceship/spaceship.zsh"
-#export SPACESHIP_CONFIG="$HOME/.config/spaceship.zsh"
+export HOMEBREW_NO_ENV_HINTS=1
 
 export BAT_THEME="Catppuccin-mocha"
 eval "$(zoxide init zsh)"
@@ -113,6 +112,3 @@ zstyle ':completion:*' menu no
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
