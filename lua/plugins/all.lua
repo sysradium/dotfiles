@@ -25,7 +25,6 @@ return {
 	"tpope/vim-surround",
 	"lewis6991/gitsigns.nvim",
 	"lukas-reineke/indent-blankline.nvim",
-	"Lokaltog/vim-easymotion",
 	"kdheepak/lazygit.nvim",
 	"junegunn/vim-easy-align",
 	{ "windwp/nvim-autopairs", event = "InsertEnter",        config = true },
@@ -37,8 +36,6 @@ return {
 	},
 	"saadparwaiz1/cmp_luasnip",
 	{
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 	},
 	{ "catppuccin/nvim",       name = "catppuccin" },
