@@ -19,6 +19,6 @@ require("lazy").setup({
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
 		{ import = "plugins" },
 	},
-	install = { colorscheme = { "catppuccin-mocha" } },
+	install = { colorscheme = { "catppuccin" } },
 	checker = { enabled = true },
 })
