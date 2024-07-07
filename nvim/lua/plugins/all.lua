@@ -19,29 +19,11 @@ return {
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
-	"rakr/vim-one",
-	"tpope/vim-obsession",
 	"tpope/vim-repeat",
 	"tpope/vim-surround",
 	"lewis6991/gitsigns.nvim",
-	"lukas-reineke/indent-blankline.nvim",
 	"kdheepak/lazygit.nvim",
 	"junegunn/vim-easy-align",
-	{ "windwp/nvim-autopairs", event = "InsertEnter",        config = true },
-	"nvim-treesitter/nvim-treesitter-context",
-	{
-		"L3MON4D3/LuaSnip",
-		version = "*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		build = "make install_jsregexp",
-	},
-	"saadparwaiz1/cmp_luasnip",
-	{
-		"neovim/nvim-lspconfig",
-	},
-	{ "catppuccin/nvim",       name = "catppuccin" },
-	{ "junegunn/fzf",          build = ":call fzf#install()" },
-	{ "junegunn/fzf.vim" },
-	"rafamadriz/friendly-snippets",
 	{
 		"goolord/alpha-nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },

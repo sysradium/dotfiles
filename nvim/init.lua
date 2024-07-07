@@ -4,7 +4,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 require("config.lazy")
-require("lsp_config")
+--require("lsp_config")
 require("navigator").setup({ main = true })
 -- Some servers have issues with backup files, see #649
 vim.opt.backup = false
