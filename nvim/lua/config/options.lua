@@ -14,4 +14,4 @@ vim.o.breakindent = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.wo.signcolumn = "yes"
-vim.o.completeopt = "menuone,noselect"
+vim.opt.clipboard = ""
