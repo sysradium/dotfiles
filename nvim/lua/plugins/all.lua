@@ -1,11 +1,12 @@
 return {
-	{
-		"ray-x/navigator.lua",
-		dependencies = {
-			{ "ray-x/guihua.lua",     build = "cd lua/fzy && make" },
-			{ "neovim/nvim-lspconfig" },
-		},
-	},
+	--	{
+	--		"ray-x/navigator.lua",
+	--		dependencies = {
+	--			{ "ray-x/guihua.lua", build = "cd lua/fzy && make" },
+	--			{ "neovim/nvim-lspconfig" },
+	--		},
+	--		config = function() end,
+	--	},
 	{
 		"ray-x/go.nvim",
 		dependencies = {
@@ -30,16 +31,6 @@ return {
 		config = function()
 			require("alpha").setup(require("alpha.themes.startify").config)
 		end,
-	},
-	"tpope/vim-sleuth",
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {},
 	},
 	{ "VonHeikemen/fine-cmdline.nvim", dependencies = { { "MunifTanjim/nui.nvim" } } },
 }

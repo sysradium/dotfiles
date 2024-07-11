@@ -4,7 +4,6 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 require("config.lazy")
-require("navigator").setup({ main = true })
 
 vim.cmd.colorscheme("catppuccin-mocha")
 
