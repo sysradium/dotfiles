@@ -50,7 +50,7 @@ symbol = " "
 
 [git_branch]
 symbol = " "
-format =  '[$symbol$branch(:$remote_branch)]($style) '
+format = '[$symbol$branch(:$remote_branch)]($style) '
 
 [golang]
 symbol = " "
@@ -64,6 +64,7 @@ symbol = " "
 
 [haxe]
 symbol = " "
+disabled = true
 
 [hg_branch]
 symbol = " "
@@ -155,6 +156,7 @@ symbol = " "
 
 [php]
 symbol = " "
+disabled = true
 
 [pijul_channel]
 symbol = " "
@@ -179,6 +181,12 @@ symbol = " "
 
 [zig]
 symbol = " "
+
+[dotnet]
+disabled = true
+
+[cobol]
+disabled = true
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
