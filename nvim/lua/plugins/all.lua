@@ -1,15 +1,8 @@
 return {
-	--	{
-	--		"ray-x/navigator.lua",
-	--		dependencies = {
-	--			{ "ray-x/guihua.lua", build = "cd lua/fzy && make" },
-	--			{ "neovim/nvim-lspconfig" },
-	--		},
-	--		config = function() end,
-	--	},
 	{
 		"ray-x/go.nvim",
 		dependencies = {
+			"ray-x/guihua.lua",
 			"neovim/nvim-lspconfig",
 			"nvim-treesitter/nvim-treesitter",
 		},
