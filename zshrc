@@ -16,7 +16,7 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(fzf-tab colorize helm golang python colorize sudo pip sudo git gitfast docker docker-compose brew encode64 httpie kubectl)
+plugins=(spaceship-vi-mode zoxide fzf-tab colorize golang python sudo git docker docker-compose kubectl)
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="$PATH:~/.local/bin"
 
@@ -30,8 +30,6 @@ fi
 
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
-
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(fzf --zsh)"
 
 export LC_ALL=en_US.UTF-8
@@ -97,7 +95,6 @@ if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-clo
 export HOMEBREW_NO_ENV_HINTS=1
 
 export BAT_THEME="Catppuccin-mocha"
-eval "$(zoxide init zsh)"
 
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
