@@ -189,6 +189,15 @@ disabled = true
 [cobol]
 disabled = true
 
+[kubernetes]
+disabled = false
+contexts = [
+  { context_pattern = ".*prod.*", style = "red", context_alias = "k8s-prod" },
+  { context_pattern = ".*dev.*", style = "blue", context_alias = "k8s-dev" },
+  { context_pattern = ".*stg.*", style = "green", context_alias = "k8s-stg" },
+  { context_pattern = ".*control.*", style = "green", context_alias = "k8s-control" },
+]
+
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
