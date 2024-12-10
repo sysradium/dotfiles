@@ -1,5 +1,6 @@
 export ZSH=~/.oh-my-zsh
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 
 # History
@@ -17,9 +18,8 @@ setopt hist_find_no_dups
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
 plugins=(spaceship-vi-mode zoxide fzf-tab colorize golang python sudo git docker docker-compose kubectl)
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-export PATH="$PATH:~/.local/bin"
 
+export PATH="$PATH:~/.local/bin"
 source $ZSH/oh-my-zsh.sh
 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -69,11 +69,6 @@ alias kns='kubens'
 alias ls='lsd'
 alias lt='ls --tree'
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
-
-
 ### Utility functions
 function ppjson() {
 	python -c "import json;import sys; print(json.dumps(json.loads(sys.stdin.read()), ensure_ascii=False, indent=4))" | pygmentize -l json
@@ -105,3 +100,6 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/xenon/.cache/lm-studio/bin"

@@ -5,14 +5,21 @@ return {
 			"ray-x/guihua.lua",
 		},
 		config = function()
-			require("go").setup()
+			require("go").setup({
+				lsp_inlay_hints = {
+					enable = false,
+				},
+				lsp_document_formatting = false,
+				null_ls = false,
+				diagnostic = false,
+				lsp_cfg = false,
+			})
 		end,
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
 	},
 	"tpope/vim-repeat",
 	"tpope/vim-surround",
-	"lewis6991/gitsigns.nvim",
 	"junegunn/vim-easy-align",
 	{
 		"goolord/alpha-nvim",
