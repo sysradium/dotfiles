@@ -1,6 +1,7 @@
 {
   "extras": [
     "lazyvim.plugins.extras.coding.luasnip",
+    "lazyvim.plugins.extras.coding.mini-surround",
     "lazyvim.plugins.extras.dap.core",
     "lazyvim.plugins.extras.editor.navic",
     "lazyvim.plugins.extras.lang.docker",
@@ -10,8 +11,7 @@
     "lazyvim.plugins.extras.lang.toml",
     "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.yaml",
-    "lazyvim.plugins.extras.test.core",
-    "lazyvim.plugins.extras.util.gitui"
+    "lazyvim.plugins.extras.test.core"
   ],
   "news": {
     "NEWS.md": "7429"

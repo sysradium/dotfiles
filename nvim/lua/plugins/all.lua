@@ -19,7 +19,6 @@ return {
 		ft = { "go", "gomod" },
 	},
 	"tpope/vim-repeat",
-	"tpope/vim-surround",
 	"junegunn/vim-easy-align",
 	{
 		"goolord/alpha-nvim",
