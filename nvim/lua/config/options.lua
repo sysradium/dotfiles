@@ -8,3 +8,4 @@ vim.opt.scrolloff = 8
 vim.opt.colorcolumn = "120"
 vim.o.breakindent = true
 vim.opt.clipboard = ""
+vim.g.snacks_animate = false

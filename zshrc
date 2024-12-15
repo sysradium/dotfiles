@@ -39,6 +39,7 @@ export KEYTIMEOUT=1
 export GOPATH=$HOME/golang
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 ### Golang utils
 function go_coverage() {

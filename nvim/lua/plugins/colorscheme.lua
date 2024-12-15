@@ -4,7 +4,6 @@ return {
 		lazy = true,
 		name = "catppuccin",
 	},
-
 	{
 		"LazyVim/LazyVim",
 		opts = {
