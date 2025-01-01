@@ -17,7 +17,7 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(spaceship-vi-mode zoxide fzf-tab colorize golang python sudo git docker docker-compose kubectl)
+plugins=(spaceship-vi-mode zoxide fzf-tab colorize golang virtualenv python sudo git docker docker-compose kubectl $plugins)
 
 export PATH="$PATH:~/.local/bin"
 source $ZSH/oh-my-zsh.sh
@@ -28,8 +28,6 @@ else
 	export EDITOR='vim'
 fi
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
 eval "$(fzf --zsh)"
 
 export LC_ALL=en_US.UTF-8
