@@ -2,16 +2,15 @@ return {
 	"saghen/blink.cmp",
 	opts = {
 		completion = {
+			ghost_text = {
+				enabled = true,
+			},
 			list = {
-				selection = { preselect = true, auto_insert = true },
+				selection = { preselect = true, auto_insert = false },
 			},
 		},
-		keymap = {
-			preset = "enter",
-			["<Tab>"] = {
-				LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
-				"fallback",
-			},
+		signature = {
+			enabled = false,
 		},
 	},
 }

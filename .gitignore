@@ -1,3 +1,5 @@
 zshrc_private
 zshrc_keys
 zshrc_work
+.DS_Store
+nvim/lazy-lock.json
