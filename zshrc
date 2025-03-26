@@ -1,7 +1,26 @@
 export ZSH=~/.oh-my-zsh
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+source ~/.zsh/zsh-defer/zsh-defer.plugin.zsh
+
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
+
+DISABLE_AUTO_UPDATE=true
+zstyle ':completion:*' rehash true
+
+autoload -Uz compinit
+compinit -C
+
+if type brew &>/dev/null; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+
+zstyle ':omz:update' mode disabled
+
+zsh-defer eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # History
 HISTSIZE=5000
@@ -17,7 +36,7 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(alias-finder spaceship-vi-mode zoxide fzf-tab colorize golang virtualenv python sudo git docker docker-compose kubectl)
+plugins=(alias-finder fzf-tab zoxide sudo git kubectl)
 
 export PATH="$PATH:~/.local/bin"
 source $ZSH/oh-my-zsh.sh
@@ -81,10 +100,10 @@ function ppjson() {
 export KUBE_EDITOR=nvim
 
 # The next line updates PATH for Yandex Cloud CLI.
-if [ -f "$HOME/yandex-cloud/path.bash.inc" ]; then source "$HOME/yandex-cloud/path.bash.inc"; fi
+# if [ -f "$HOME/yandex-cloud/path.bash.inc" ]; then source "$HOME/yandex-cloud/path.bash.inc"; fi
 
 # The next line enables shell command completion for yc.
-if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-cloud/completion.zsh.inc"; fi
+# if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-cloud/completion.zsh.inc"; fi
 
 export HOMEBREW_NO_ENV_HINTS=1
 
@@ -102,3 +121,10 @@ zstyle ':completion:*' menu no
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/xenon/.cache/lm-studio/bin"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
