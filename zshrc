@@ -1,7 +1,5 @@
 export ZSH=~/.oh-my-zsh
 
-source ~/.zsh/zsh-defer/zsh-defer.plugin.zsh
-
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
 
@@ -11,14 +9,11 @@ zstyle ':completion:*' rehash true
 autoload -Uz compinit
 compinit -C
 
-if type brew &>/dev/null; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 zstyle ':omz:update' mode disabled
 
-zsh-defer eval "$(fzf --zsh)"
+eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -72,11 +67,6 @@ alias unset_docker='unset DOCKER_TLS_VERIFY DOCKER_HOST DOCKER_CERT_PATH DOCKER_
 alias vim=nvim
 alias zshconfig="nvim ~/.zshrc"
 alias mtr="sudo mtr"
-alias copyid="ssh-copy-id -i ~/.ssh/id_rsa"
-#alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
-alias consul="docker run --rm -p 8301:8301 -p 8302:8301 -p 8500:8500 -p 8600:8600 -p 8300:8300 consul"
-alias postgres="docker run -p 127.0.0.1:5432:5432 --rm -e POSTGRES_PASSWORD=postgres postgres"
-alias mysql="docker run -p 127.0.0.1:3306:3306 --rm -e MYSQL_ROOT_PASSWORD=password mysql:8"
 alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p"'
 alias ssh='TERM=xterm ssh'
 alias gphm='git push && hub pull-request -b master'
@@ -92,35 +82,24 @@ function ppjson() {
 	python -c "import json;import sys; print(json.dumps(json.loads(sys.stdin.read()), ensure_ascii=False, indent=4))" | pygmentize -l json
 }
 
-# autoload -U compinit && compinit
+
 ### Work related
 . ~/.zshrc_private
 
 ### Miscellaneous
 export KUBE_EDITOR=nvim
 
-# The next line updates PATH for Yandex Cloud CLI.
-# if [ -f "$HOME/yandex-cloud/path.bash.inc" ]; then source "$HOME/yandex-cloud/path.bash.inc"; fi
-
-# The next line enables shell command completion for yc.
-# if [ -f "$HOME/yandex-cloud/completion.zsh.inc" ]; then source "$HOME/yandex-cloud/completion.zsh.inc"; fi
-
 export HOMEBREW_NO_ENV_HINTS=1
 
 export BAT_THEME="Catppuccin-mocha"
 
-# disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences here, fzf-tab will ignore them
 zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/xenon/.cache/lm-studio/bin"
+export PATH="$PATH:~/.cache/lm-studio/bin"
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH

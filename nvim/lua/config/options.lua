@@ -9,3 +9,4 @@ vim.opt.colorcolumn = "120"
 vim.o.breakindent = true
 vim.opt.clipboard = ""
 vim.g.snacks_animate = false
+vim.g.lazyvim_python_lsp = "basedpyright"
