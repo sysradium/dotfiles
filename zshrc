@@ -1,7 +1,5 @@
 export ZSH=~/.oh-my-zsh
 
-source ~/.zsh/zsh-defer/zsh-defer.plugin.zsh
-
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
 
@@ -11,14 +9,11 @@ zstyle ':completion:*' rehash true
 autoload -Uz compinit
 compinit -C
 
-if type brew &>/dev/null; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 zstyle ':omz:update' mode disabled
 
-zsh-defer eval "$(fzf --zsh)"
+eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
