@@ -16,6 +16,7 @@ zstyle ':omz:update' mode disabled
 eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(mise activate zsh --shims)"
 
 # History
 HISTSIZE=5000
@@ -107,3 +108,8 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit
 fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/xenon/.cache/lm-studio/bin"
+# End of LM Studio CLI section
+

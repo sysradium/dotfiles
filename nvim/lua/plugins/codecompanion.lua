@@ -7,22 +7,18 @@ return {
 	config = true,
 	opts = {
 		adapters = {
-			ollama = function()
-				return require("codecompanion.adapters").extend("openai_compatible", {
-					env = {
-						url = "http://localhost:1234",
-						api_key = "OpenAI_API_KEY",
-						chat_url = "/v1/chat/completions",
+			copilot = function()
+				return require("codecompanion.adapters").extend("copilot", {
+					name = "copilot",
+					schema = {
+						model = {
+							default = "claude-3.7-sonnet", -- or "claude-3.7-sonnet" if available
+						},
 					},
 				})
 			end,
-		},
-		strategies = {
-			chat = {
-				adapter = "ollama",
-			},
-			inline = {
-				adapter = "ollama",
+			opts = {
+				show_model_choices = true,
 			},
 		},
 	},
