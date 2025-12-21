@@ -6,17 +6,28 @@ ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
 DISABLE_AUTO_UPDATE=true
 zstyle ':completion:*' rehash true
 
-autoload -Uz compinit
-compinit -C
+mkdir -p ~/.zfunc
+fpath=(~/.zfunc $fpath)
+
+sk --shell zsh > ~/.zfunc/_sk
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 zstyle ':omz:update' mode disabled
 
-eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(mise activate zsh --shims)"
+
+### Completions
+
+mkdir -p ~/.zfunc
+fpath=(~/.zfunc $fpath)
+fpath=("$(brew --prefix)/share/zsh-completions" $fpath)
+sk --shell zsh > ~/.zfunc/_sk
+
+autoload -Uz compinit
+compinit -C
 
 # History
 HISTSIZE=5000
@@ -32,7 +43,9 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(alias-finder fzf-tab zoxide sudo git kubectl)
+plugins=(alias-finder zoxide sudo git kubectl)
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export PATH="$PATH:~/.local/bin"
 source $ZSH/oh-my-zsh.sh
@@ -42,8 +55,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
 	export EDITOR='vim'
 fi
-
-eval "$(fzf --zsh)"
 
 export LC_ALL=en_US.UTF-8
 export KEYTIMEOUT=1
@@ -102,13 +113,8 @@ zstyle ':completion:*' menu no
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:~/.cache/lm-studio/bin"
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-  autoload -Uz compinit
-  compinit
-fi
-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/xenon/.cache/lm-studio/bin"
 # End of LM Studio CLI section
+
+source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
