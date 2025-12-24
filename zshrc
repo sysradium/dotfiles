@@ -9,9 +9,9 @@ zstyle ':completion:*' rehash true
 mkdir -p ~/.zfunc
 fpath=(~/.zfunc $fpath)
 
-sk --shell zsh > ~/.zfunc/_sk
-
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+sk --shell zsh > ~/.zfunc/_sk
 
 zstyle ':omz:update' mode disabled
 
