@@ -24,11 +24,11 @@ eval "$(mise activate zsh --shims)"
 mkdir -p ~/.zfunc
 fpath=(~/.zfunc $fpath)
 fpath=("$(brew --prefix)/share/zsh-completions" $fpath)
-sk --shell zsh > ~/.zfunc/_sk
 
 autoload -Uz compinit
 compinit -C
 
+source <(sk --shell zsh)
 # History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
