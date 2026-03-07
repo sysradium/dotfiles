@@ -10,16 +10,6 @@ return {
 				position = "float",
 				width = 0.9,
 				height = 0.9,
-				keys = {
-					claude_hide = {
-						toggle_key,
-						function(self)
-							self:hide()
-						end,
-						mode = "t",
-						desc = "Hide",
-					},
-				},
 			},
 		},
 	},
