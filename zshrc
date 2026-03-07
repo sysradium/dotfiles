@@ -1,59 +1,40 @@
-export ZSH=~/.oh-my-zsh
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
+export ZSH=~/.oh-my-zsh
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
-
 DISABLE_AUTO_UPDATE=true
-zstyle ':completion:*' rehash true
-
-mkdir -p ~/.zfunc
-fpath=(~/.zfunc $fpath)
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-sk --shell zsh > ~/.zfunc/_sk
-
 zstyle ':omz:update' mode disabled
 
-eval "$(starship init zsh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(mise activate zsh --shims)"
 
 ### Completions
-
 mkdir -p ~/.zfunc
 fpath=(~/.zfunc $fpath)
 fpath=("$(brew --prefix)/share/zsh-completions" $fpath)
-
 autoload -Uz compinit
 compinit -C
 
-source <(sk --shell zsh)
+### Oh-My-Zsh
+plugins=(alias-finder zoxide sudo git kubectl)
+source $ZSH/oh-my-zsh.sh
+
+### sk (skim)
+source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
+
+eval "$(starship init zsh)"
+
 # History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
-
-fpath=(/usr/local/share/zsh/site-functions $fpath)
-plugins=(alias-finder zoxide sudo git kubectl)
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-export PATH="$PATH:~/.local/bin"
-source $ZSH/oh-my-zsh.sh
+setopt appendhistory sharehistory hist_ignore_space
+setopt hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
 
 if [[ -n $SSH_CONNECTION ]]; then
-	export EDITOR='nvim'
-else
 	export EDITOR='vim'
+else
+	export EDITOR='nvim'
 fi
 
 export LC_ALL=en_US.UTF-8
@@ -62,8 +43,22 @@ export KEYTIMEOUT=1
 ### Golang settings
 export GOPATH=$HOME/golang
 export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+### PATH additions
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cache/lm-studio/bin"
+
+### Completion styles
+zstyle ':completion:*' rehash true
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+
+export KUBE_EDITOR=nvim
+export HOMEBREW_NO_ENV_HINTS=1
+export BAT_THEME="Catppuccin-mocha"
 
 ### Golang utils
 function go_coverage() {
@@ -94,27 +89,5 @@ function ppjson() {
 	python -c "import json;import sys; print(json.dumps(json.loads(sys.stdin.read()), ensure_ascii=False, indent=4))" | pygmentize -l json
 }
 
-
 ### Work related
 . ~/.zshrc_private
-
-### Miscellaneous
-export KUBE_EDITOR=nvim
-
-export HOMEBREW_NO_ENV_HINTS=1
-
-export BAT_THEME="Catppuccin-mocha"
-
-zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' menu no
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:~/.cache/lm-studio/bin"
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/xenon/.cache/lm-studio/bin"
-# End of LM Studio CLI section
-
-source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
