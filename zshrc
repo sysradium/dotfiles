@@ -20,6 +20,7 @@ plugins=(alias-finder zoxide sudo git kubectl)
 source $ZSH/oh-my-zsh.sh
 
 ### sk (skim)
+export SKIM_CTRL_R_OPTS="--scheme=history --bind=ctrl-s:toggle-sort"
 source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
 
 eval "$(starship init zsh)"
@@ -30,6 +31,7 @@ HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 setopt appendhistory sharehistory hist_ignore_space
 setopt hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
+setopt extended_history
 
 if [[ -n $SSH_CONNECTION ]]; then
 	export EDITOR='vim'
