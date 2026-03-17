@@ -1,6 +1,9 @@
+worktree-path = "../{{ branch | sanitize }}"
+
 [commit.generation]
 command = "codex exec -m gpt-5.1-codex-mini -c model_reasoning_effort='low' -c system_prompt='' --sandbox=read-only --json - | jq -sr '[.[] | select(.item.type? == \"agent_message\")] | last.item.text'"
 
 
 [post-switch]
-tmux = "[ -n \"$TMUX\" ] && tmux rename-window wt/{{ branch | sanitize }}"
+tmux = "[ -n \"$TMUX\" ] && tmux rename-window ' '$(basename $(git rev-parse --git-common-dir | sed 's|/\\.git$||'))/{{ branch | sanitize }}"
+copy = "wt step copy-ignored"

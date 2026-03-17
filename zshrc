@@ -20,7 +20,7 @@ plugins=(alias-finder zoxide sudo git kubectl)
 source $ZSH/oh-my-zsh.sh
 
 ### sk (skim)
-export SKIM_CTRL_R_OPTS="--scheme=history --bind=ctrl-s:toggle-sort"
+export SKIM_CTRL_R_OPTS="--scheme=history --no-sort"
 source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
 
 eval "$(starship init zsh)"
