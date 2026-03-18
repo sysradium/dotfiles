@@ -86,6 +86,8 @@ alias kns='kubens'
 alias ls='lsd'
 alias lt='ls --tree'
 alias wts='wt switch'
+alias wtsc='wt switch --create'
+alias wtl='wt list'
 
 ### Utility functions
 function ppjson() {
