@@ -1,27 +1,25 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-export ZSH=~/.oh-my-zsh
-ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
-ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
-DISABLE_AUTO_UPDATE=true
-zstyle ':omz:update' mode disabled
-
 eval "$(mise activate zsh --shims)"
 
 ### Completions
 mkdir -p ~/.zfunc
 fpath=(~/.zfunc $fpath)
 fpath=("$(brew --prefix)/share/zsh-completions" $fpath)
+
+# kubectl completion (cached in ~/.zfunc)
+if (( $+commands[kubectl] )) && [[ ! -f ~/.zfunc/_kubectl ]]; then
+  kubectl completion zsh >| ~/.zfunc/_kubectl
+fi
+
 autoload -Uz compinit
 compinit -C
-
-### Oh-My-Zsh
-plugins=(alias-finder zoxide sudo git kubectl)
-source $ZSH/oh-my-zsh.sh
 
 ### sk (skim)
 export SKIM_CTRL_R_OPTS="--scheme=history"
 source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
+
+source ~/dotfiles/zsh/plugins.zsh
 
 eval "$(starship init zsh)"
 
@@ -56,7 +54,7 @@ zstyle ':completion:*' rehash true
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' menu no
+zstyle ':completion:*' menu select
 
 export KUBE_EDITOR=nvim
 export HOMEBREW_NO_ENV_HINTS=1
