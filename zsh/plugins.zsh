@@ -34,16 +34,17 @@ alias-finder() {
 
   local -a tokens=("${(@s/ /)cmd}")
   local search="${tokens[*]}"
-  local result
+  local alias_name alias_value
 
   # Search from most-specific (full command) to least-specific (first word)
   while [[ ${#tokens} -gt 0 ]]; do
     search="${tokens[*]}"
-    result=$(alias | grep -E "='?${(q)search}'?\$" | sed 's/=.*//')
-    if [[ -n "$result" ]]; then
-      echo "${result}='${search}'"
-      [[ -n "$exact" ]] && break
-    fi
+    for alias_name alias_value in ${(kv)aliases}; do
+      if [[ "$alias_value" == "$search" ]]; then
+        print -r -- "${alias_name}='${search}'"
+        [[ -n "$exact" ]] && return
+      fi
+    done
     tokens=("${tokens[@]:0:${#tokens}-1}")
   done
 }
@@ -130,6 +131,9 @@ alias gstl='git stash list'
 alias gstc='git stash clear'
 alias gstd='git stash drop'
 
+# branch
+alias gcm='git checkout $(git_main_branch)'
+
 # rebase
 alias grb='git rebase'
 alias grba='git rebase --abort'
@@ -153,6 +157,7 @@ if (( $+commands[kubectl] )); then
   alias kgpwide='kgp -o wide'
   alias kdp='kubectl describe pods'
   alias kdelp='kubectl delete pods'
+  alias kl='kubectl logs'
   alias klog='kubectl logs'
   alias klf='kubectl logs -f'
   alias kl1h='kubectl logs --since 1h'
