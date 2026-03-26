@@ -158,7 +158,6 @@ if (( $+commands[kubectl] )); then
   alias kdp='kubectl describe pods'
   alias kdelp='kubectl delete pods'
   alias kl='kubectl logs'
-  alias klog='kubectl logs'
   alias klf='kubectl logs -f'
   alias kl1h='kubectl logs --since 1h'
   alias klf1h='kubectl logs --since 1h -f'

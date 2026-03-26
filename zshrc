@@ -16,7 +16,7 @@ autoload -Uz compinit
 compinit -C
 
 ### sk (skim)
-export SKIM_CTRL_R_OPTS="--scheme=history"
+export SKIM_CTRL_R_OPTS="--scheme=history --no-sort"
 source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
 
 source ~/dotfiles/zsh/plugins.zsh
