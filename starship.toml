@@ -33,6 +33,11 @@ symbol = " "
 read_only = " 󰌾"
 truncation_symbol = "./"
 
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vicmd_symbol = "[‹](bold black bg:yellow)"
+
 [docker_context]
 symbol = " "
 

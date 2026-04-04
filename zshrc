@@ -21,6 +21,10 @@ source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
 
 source ~/dotfiles/zsh/plugins.zsh
 
+bindkey -v
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^H' backward-delete-char
+
 eval "$(starship init zsh)"
 
 # History
