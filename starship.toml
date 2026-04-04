@@ -36,7 +36,7 @@ truncation_symbol = "./"
 [character]
 success_symbol = "[>](bold green)"
 error_symbol = "[>](bold red)"
-vicmd_symbol = "[‹](bold black bg:yellow)"
+vicmd_symbol = "[N](bold black bg:green)"
 
 [docker_context]
 symbol = " "

@@ -142,6 +142,9 @@ alias grbi='git rebase --interactive'
 alias grbs='git rebase --skip'
 alias grbm='git rebase $(git_main_branch)'
 
+# reset
+alias grhh='git reset --hard'
+
 # ── 6. Kubectl completion + aliases ──────────────────────────────────────────
 if (( $+commands[kubectl] )); then
   # basic
