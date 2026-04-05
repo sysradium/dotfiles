@@ -5,5 +5,5 @@ command = "codex exec -m gpt-5.1-codex-mini -c model_reasoning_effort='low' -c s
 
 
 [post-switch]
-tmux = "[ -n \"$TMUX\" ] && tmux rename-window ' '$(basename $(git rev-parse --git-common-dir | sed 's|/\\.git$||'))/{{ branch | sanitize }}"
+tmux = "[ -n \"$TMUX\" ] && tmux rename-window ' '$(basename $(git rev-parse --git-common-dir | sed 's|/\\.git$||')):{{ branch | sanitize }}"
 copy = "wt step copy-ignored"
