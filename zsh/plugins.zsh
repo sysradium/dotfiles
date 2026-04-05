@@ -133,6 +133,8 @@ alias gstd='git stash drop'
 
 # branch
 alias gcm='git checkout $(git_main_branch)'
+alias gcb='git checkout -b'
+alias gco='git checkout'
 
 # rebase
 alias grb='git rebase'

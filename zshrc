@@ -16,7 +16,7 @@ autoload -Uz compinit
 compinit -C
 
 ### sk (skim)
-export SKIM_CTRL_R_OPTS="--scheme=history --no-sort"
+export SKIM_CTRL_R_OPTS="--scheme=history"
 source /opt/homebrew/opt/sk/share/zsh/site-functions/key-bindings.zsh
 
 source ~/dotfiles/zsh/plugins.zsh
@@ -92,6 +92,7 @@ alias la='ls -A'
 alias ll='ls -l'
 alias lla='ls -lA'
 alias lt='ls --tree'
+alias wtc='wt step commit'
 alias wts='wt switch'
 alias wtsc='wt switch --create'
 alias wtl='wt list'
