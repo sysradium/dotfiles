@@ -4,7 +4,6 @@
 # ── 0. fzf-tab (fuzzy completion menu via sk) ─────────────────────────────────
 # Must be sourced after compinit but before other plugins that wrap completion
 source ~/dotfiles/zsh/fzf-tab/fzf-tab.plugin.zsh
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
@@ -112,6 +111,7 @@ alias gp='git push'
 alias gpf='git push --force-with-lease'
 alias 'gpf!'='git push --force'
 alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias gfa='git fetch --all --tags --prune'
 alias gl='git pull'
 alias gpr='git pull --rebase'
 alias gpra='git pull --rebase --autostash'
