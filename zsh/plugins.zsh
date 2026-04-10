@@ -4,7 +4,6 @@
 # ── 0. fzf-tab (fuzzy completion menu via sk) ─────────────────────────────────
 # Must be sourced after compinit but before other plugins that wrap completion
 source ~/dotfiles/zsh/fzf-tab/fzf-tab.plugin.zsh
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
