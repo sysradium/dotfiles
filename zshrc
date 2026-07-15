@@ -1,6 +1,6 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-eval "$(mise activate zsh --shims)"
+eval "$(mise activate zsh)"
 
 ### Completions
 mkdir -p ~/.zfunc
