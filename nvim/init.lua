@@ -24,3 +24,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.wait(100)
 	end,
 })
+
+require("vim._core.ui2").enable({
+	enable = true,
+})

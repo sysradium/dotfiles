@@ -2,17 +2,11 @@ return {
 	"saghen/blink.cmp",
 	opts = {
 		completion = {
-			accept = {
-				auto_brackets = {
-					enabled = true,
-				},
-			},
+			menu = { border = "single" },
 			documentation = {
 				auto_show = true,
 				auto_show_delay_ms = 10,
-			},
-			ghost_text = {
-				enabled = true,
+				window = { border = "single" },
 			},
 			list = {
 				selection = { preselect = true, auto_insert = false },
