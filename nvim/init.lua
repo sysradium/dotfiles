@@ -15,16 +15,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	callback = function()
-		vim.lsp.buf.code_action({
-			context = { only = { "source.organizeImports" } },
-			apply = true,
-		})
-		vim.wait(100)
-	end,
-})
-
 require("vim._core.ui2").enable({
 	enable = true,
 })

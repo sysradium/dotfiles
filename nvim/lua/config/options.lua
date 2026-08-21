@@ -11,3 +11,4 @@ vim.opt.clipboard = ""
 vim.g.snacks_animate = false
 vim.g.lazyvim_python_lsp = "basedpyright"
 vim.g.lazyvim_eslint_auto_format = true
+vim.g.lazyvim_prettier_needs_config = true
