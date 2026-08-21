@@ -51,9 +51,7 @@ return {
 					table.insert(
 						config.cmd,
 						"--query-driver="
-							.. vim.fn.expand(
-								"~/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-g++"
-							)
+							.. vim.fn.expand("~/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-g++")
 					)
 				end
 			end
@@ -62,9 +60,27 @@ return {
 	{
 		"stevearc/overseer.nvim",
 		keys = {
-			{ "<leader>pb", function() run_task("PlatformIO: Build", { "run" }, true) end, desc = "PlatformIO build" },
-			{ "<leader>pu", function() run_task("PlatformIO: Upload", { "run", "-t", "upload" }, true) end, desc = "PlatformIO upload" },
-			{ "<leader>pm", function() run_task("PlatformIO: Monitor", { "device", "monitor", "--baud", "115200" }, true) end, desc = "PlatformIO monitor" },
+			{
+				"<leader>pb",
+				function()
+					run_task("PlatformIO: Build", { "run" }, true)
+				end,
+				desc = "PlatformIO build",
+			},
+			{
+				"<leader>pu",
+				function()
+					run_task("PlatformIO: Upload", { "run", "-t", "upload" }, true)
+				end,
+				desc = "PlatformIO upload",
+			},
+			{
+				"<leader>pm",
+				function()
+					run_task("PlatformIO: Monitor", { "device", "monitor", "--baud", "115200" }, true)
+				end,
+				desc = "PlatformIO monitor",
+			},
 		},
 	},
 }
