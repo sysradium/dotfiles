@@ -1,0 +1,44 @@
+id = "alex.project-worktrees"
+name = "Project Worktree Labels"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "Name Herdr Spaces after repositories and agents after linked worktree branches"
+platforms = ["macos", "linux"]
+
+[[startup]]
+command = ["node", "reconcile.mjs"]
+
+[[actions]]
+id = "reconcile"
+title = "Reconcile project and worktree labels"
+contexts = ["workspace"]
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "workspace.created"
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "workspace.focused"
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "tab.created"
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "tab.focused"
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "pane.created"
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "pane.moved"
+command = ["node", "reconcile.mjs"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["node", "reconcile.mjs"]
+
