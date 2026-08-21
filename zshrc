@@ -96,6 +96,7 @@ alias wtc='wt step commit'
 alias wts='wt switch'
 alias wtsc='wt switch --create'
 alias wtl='wt list'
+alias wtrb='wt switch main && gpr && wts - && grbm'
 
 ### Utility functions
 function ppjson() {
