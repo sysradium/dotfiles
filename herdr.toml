@@ -45,6 +45,15 @@ width = "80%"
 height = "70%"
 
 [[keys.command]]
+key = "prefix+u"
+type = "popup"
+command = '''
+selected_url=$("${HERDR_BIN_PATH:-herdr}" pane read "$HERDR_ACTIVE_PANE_ID" --source visible --raw | rg -o 'https?://\S+' | sed 's/[";<>)]*$//' | sort -u | fzf) || exit 0
+[ -n "$selected_url" ] && open "$selected_url"
+'''
+description = "Open URL from the active pane"
+
+[[keys.command]]
 key = "prefix+shift+g"
 type = "plugin_action"
 command = "worktrunk.open"
