@@ -3,7 +3,7 @@ import { realpathSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
-const METADATA_SOURCE = "alex.project-worktrees";
+const METADATA_SOURCE = "sysradium.project-worktrees";
 
 function idNumber(id) {
   const match = String(id).match(/(\d+)$/);
