@@ -12,6 +12,13 @@ if (( $+commands[kubectl] )) && [[ ! -f ~/.zfunc/_kubectl ]]; then
   kubectl completion zsh >| ~/.zfunc/_kubectl
 fi
 
+if (( $+commands[uv] )) && [[ ! -f ~/.zfunc/_uv ]]; then
+  uv generate-shell-completion zsh >| ~/.zfunc/_uv
+fi
+if (( $+commands[uvx] )) && [[ ! -f ~/.zfunc/_uvx ]]; then
+  uvx --generate-shell-completion zsh >| ~/.zfunc/_uvx
+fi
+
 autoload -Uz compinit
 compinit -C
 

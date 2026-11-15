@@ -12,8 +12,7 @@ import locale
 import math
 import os
 import re
-import shutil
-import subprocess
+import socket
 import sys
 import time
 import unicodedata
@@ -23,11 +22,23 @@ REFRESH_SECONDS = 1.0
 PREVIEW_REFRESH_SECONDS = 0.2
 COMMAND_TIMEOUT = 2.0
 AGENT_KINDS = {"codex", "claude"}
+# (urgency, badge, colour key); urgency < 2 needs attention.
+STATUSES = {
+    "blocked": (0, "● NEEDS INPUT", "blocked"), "done": (1, "✓ DONE", "done"),
+    "idle": (2, "○ idle", "idle"), "working": (3, "◐ working", "working"),
+    "unknown": (4, "? unknown", None),
+}
+HEADER_COUNTS = (("blocked", "● {} needs input"), ("done", "✓ {} done"),
+                 ("working", "◐ {} working"), ("idle", "○ {} idle"))
 ANSI_ESCAPE = re.compile(
     r"\x1b(?:\[[0-?]*[ -/]*[@-~]|\][^\x07\x1b]*(?:\x07|\x1b\\)"
     r"|[PX^_][\s\S]*?\x1b\\|[@-_])"
 )
 SGR = re.compile(r"(\x1b\[[0-9;:]*m)")
+
+
+def plain_text(line):
+    return "".join(token for token in line[1] if not SGR.fullmatch(token))
 
 
 def styled_lines(text):
@@ -47,10 +58,28 @@ def styled_lines(text):
                     state = token
                 else:
                     state += token
-    while lines and not "".join(
-        token for token in lines[-1][1] if not SGR.fullmatch(token)
-    ).strip():
+    while lines and not plain_text(lines[-1]).strip():
         lines.pop()
+    return lines
+
+
+def is_rule(text):
+    # Claude right-aligns the running task's title inside the upper rule.
+    text = text.strip()
+    return text.startswith("─" * 10) and text.endswith("─")
+
+
+def without_input_box(lines):
+    """Drop Claude's prompt box and everything under it, keeping the spinner line."""
+    texts = [plain_text(line) for line in lines]
+    # Claude lists background tasks below its status lines, so look past the box.
+    for upper in range(max(0, len(lines) - 16), len(lines) - 2):
+        if (is_rule(texts[upper]) and texts[upper + 1].lstrip().startswith("❯")
+                and any(map(is_rule, texts[upper + 2:upper + 5]))):
+            lines = lines[:upper]
+            while lines and not plain_text(lines[-1]).strip():
+                lines.pop()
+            return lines
     return lines
 
 
@@ -112,36 +141,35 @@ def put(window, y, x, text, style=0, width=None):
 
 class Herdr:
     def __init__(self):
-        self.binary = os.environ.get("HERDR_BIN_PATH") or shutil.which("herdr")
-        if not self.binary:
-            raise RuntimeError("herdr is not on PATH")
+        self.socket_path = os.environ.get("HERDR_SOCKET_PATH")
+        if not self.socket_path:
+            raise RuntimeError("HERDR_SOCKET_PATH is not set")
 
-    def call(self, *args):
-        result = subprocess.run(
-            [self.binary, *args], stdin=subprocess.DEVNULL,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            encoding="utf-8", errors="replace", timeout=COMMAND_TIMEOUT,
-        )
-        if result.returncode:
-            detail = result.stderr.strip() or result.stdout.strip()
-            raise RuntimeError(detail or "Herdr command failed")
-        return result.stdout
+    def call(self, method, **params):
+        # The server answers one newline-terminated request per connection.
+        request = json.dumps({"id": "1", "method": method, "params": params})
+        with socket.socket(socket.AF_UNIX) as connection:
+            connection.settimeout(COMMAND_TIMEOUT)
+            connection.connect(self.socket_path)
+            connection.sendall(request.encode() + b"\n")
+            line = connection.makefile("rb").readline()
+        if not line:
+            raise RuntimeError("Herdr closed the connection")
+        response = json.loads(line)
+        if response.get("error"):
+            raise RuntimeError(response["error"].get("message", f"{method} failed"))
+        return response["result"]
 
     def snapshot(self):
-        response = json.loads(self.call("api", "snapshot"))
-        if response.get("error"):
-            raise RuntimeError(response["error"].get("message", "Snapshot failed"))
-        return response["result"]["snapshot"]
+        return self.call("session.snapshot")["snapshot"]
 
     def read(self, pane_id):
-        text = self.call("pane", "read", pane_id, "--source", "visible",
-                         "--format", "ansi", "--raw")
-        return styled_lines(text)
+        result = self.call("pane.read", pane_id=pane_id, source="visible",
+                           format="ansi", strip_ansi=False)
+        return styled_lines(result["read"]["text"])
 
     def focus(self, pane_id):
-        response = json.loads(self.call("agent", "focus", pane_id))
-        if response.get("error"):
-            raise RuntimeError(response["error"].get("message", "Focus failed"))
+        self.call("agent.focus", target=pane_id)
 
 
 class Dashboard:
@@ -184,7 +212,6 @@ class Dashboard:
                 ("blocked", curses.COLOR_YELLOW),
                 ("done", curses.COLOR_GREEN),
                 ("idle", curses.COLOR_BLUE),
-                ("selected", curses.COLOR_CYAN),
             ], 1):
                 if number < curses.COLOR_PAIRS:
                     curses.init_pair(number, color, background)
@@ -206,13 +233,18 @@ class Dashboard:
             workspace = workspaces.get(pane["workspace_id"], {})
             tab = tabs.get(pane["tab_id"], {})
             pane["workspace_label"] = workspace.get("label") or pane["workspace_id"]
-            pane["title"] = (pane.get("display_agent") or tab.get("label")
-                             or pane.get("terminal_title_stripped") or pane["pane_id"])
-            pane["sort_key"] = (workspace.get("number", 0), tab.get("number", 0),
-                                pane["pane_id"])
+            status = pane.get("agent_status")
+            pane["status"] = status if status in STATUSES else "unknown"
+            pane["title"] = (pane.get("label") or pane.get("terminal_title_stripped")
+                             or tab.get("label") or pane.get("display_agent")
+                             or pane["pane_id"])
+            pane["sort_key"] = (STATUSES[pane["status"]][0], workspace.get("number", 0),
+                                tab.get("number", 0), pane["pane_id"])
             panes.append(pane)
         panes.sort(key=lambda pane: pane["sort_key"])
         live_ids = {pane["pane_id"] for pane in panes}
+        if not self.loaded and panes and STATUSES[panes[0]["status"]][0] < 2:
+            self.selected = panes[0]["pane_id"]
         if self.selected not in live_ids:
             focused = snapshot.get("focused_pane_id") if not self.loaded else None
             self.selected = focused if focused in live_ids else (
@@ -283,7 +315,16 @@ class Dashboard:
             self.screen.refresh()
             return columns, rows
         count = len(self.panes)
-        put(self.screen, 0, 0, f" Agents: {count} | live terminal previews", curses.A_BOLD)
+        counts = {}
+        for pane in self.panes:
+            counts[pane["status"]] = counts.get(pane["status"], 0) + 1
+        segments = [(f" {text.format(counts[status])}  ",
+                     self.colors.get(status, 0) | curses.A_BOLD)
+                    for status, text in HEADER_COUNTS if counts.get(status)]
+        header_x = 0
+        for text, style in segments or [(f" Agents: {count}", curses.A_BOLD)]:
+            put(self.screen, 0, header_x, text, style)
+            header_x += sum(map(cell_width, text))
         start = self.top_row * columns
         end = min(count, start + rows * columns)
         frames = {}
@@ -297,10 +338,13 @@ class Dashboard:
             tile_height = (row + 1) * available // rows - row * available // rows
             tile_width = (column + 1) * width // columns - x
             tile = self.screen.derwin(tile_height, tile_width, y, x)
-            status = pane.get("agent_status") or "unknown"
+            status = pane["status"]
+            urgency, badge, color = STATUSES[status]
+            attention = urgency < 2
             selected = pane_id == self.selected
-            border = (self.colors.get("selected", 0) | curses.A_BOLD
-                      if selected else curses.A_DIM)
+            border = self.colors.get(color, curses.A_DIM)
+            if attention or selected:
+                border |= curses.A_BOLD
             tile.attrset(border)
             if selected:
                 put(tile, 0, 0, "╔" + "═" * (tile_width - 2) + "╗", border)
@@ -312,19 +356,21 @@ class Dashboard:
             else:
                 tile.box()
             tile.attrset(0)
-            put(tile, 0, 2, f" {'▶ ' if selected else ''}{pane['title']} ",
-                border, tile_width - 4)
-            heading_style = self.colors.get(status, 0)
-            if selected:
-                heading_style = border | curses.A_REVERSE
-                put(tile, 1, 1, " " * (tile_width - 2), heading_style,
-                    tile_width - 2)
-            put(tile, 1, 2, f"{pane['workspace_label']} | {pane['agent']} | {status}",
-                heading_style, tile_width - 4)
+            room = tile_width - 4
+            left = clipped(f" {'▶ ' if selected else ''}{badge}  {pane['title']} ", room)
+            right = f" {pane['agent']} · {pane['workspace_label']} "
+            left_width = sum(map(cell_width, left))
+            right_width = sum(map(cell_width, right))
+            put(tile, 0, 2, left, border, room)
+            if left_width + right_width + 1 <= room:
+                put(tile, 0, tile_width - 2 - right_width, right, border)
             preview = self.previews.get(pane_id, {})
             lines = preview.get("lines", [])
+            # A blocked pane's prompt box is the permission dialog the user must see.
+            if status != "blocked":
+                lines = without_input_box(lines)
             message = preview.get("error", "")
-            content_rows = tile_height - 3 - bool(message)
+            content_rows = tile_height - 2 - bool(message)
             visible_lines = lines[-content_rows:] if content_rows > 0 else []
             if not lines:
                 label = "Reading screen..." if not preview else "(empty screen)"
@@ -332,7 +378,7 @@ class Dashboard:
             frame = []
             for offset in range(max(0, content_rows)):
                 line = visible_lines[offset] if offset < len(visible_lines) else ("", [])
-                frame.append(f"\x1b[{y + 3 + offset};{x + 3}H")
+                frame.append(f"\x1b[{y + 2 + offset};{x + 3}H")
                 frame.append(colored_line(line, tile_width - 4))
             frame = "".join(frame)
             rectangle = (y, x, tile_height, tile_width)
@@ -341,7 +387,6 @@ class Dashboard:
                 changed_frames.append(frame)
             if message:
                 put(tile, tile_height - 2, 2, message, curses.A_DIM, tile_width - 4)
-            put(tile, tile_height - 1, 2, f" {pane_id} ", border, tile_width - 4)
             if (not self.error and pane_id not in self.read_jobs
                     and now >= preview.get("next_read_at", 0)):
                 # Herdr's revision can omit timer/spinner-only screen changes.
@@ -351,7 +396,7 @@ class Dashboard:
             put(self.screen, 2, 2, message, curses.A_DIM)
         footer = self.error or (self.notice if now < self.notice_until else "")
         if not footer:
-            footer = " hjkl/arrows: select | Enter: open | Esc/q: close"
+            footer = " Enter open · hjkl move · Esc close"
             if count > end - start:
                 footer = f" {start + 1}-{end}/{count} |" + footer
                 if width >= len(footer) + 12:
