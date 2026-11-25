@@ -1,0 +1,30 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[terminal]
+default_shell = "/bin/zsh"
+
+[keys]
+prefix = "backtick"
+detach = "prefix+q"
+
+[ui]
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+mobile_width_threshold = 20
+hide_tab_bar_when_single_tab = true
+pane_borders = "off"
+pane_scrollbars = false
+
+[ui.toast]
+delivery = "off"
+
+[ui.sound]
+enabled = false
+
+[update]
+version_check = false
+manifest_check = false

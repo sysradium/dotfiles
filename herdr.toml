@@ -37,6 +37,41 @@ resize_pane_up = "prefix+shift+k"
 resize_pane_right = "prefix+shift+l"
 
 [[keys.command]]
+key = "prefix+q"
+type = "popup"
+command = '''
+session=quick-shared
+directory=$HOME
+if [ -n "${HERDR_ACTIVE_WORKSPACE_ID:-}" ]; then
+  # Workspace IDs are scoped to their parent Herdr server.
+  server=${HERDR_SOCKET_PATH:-${HERDR_SESSION:-default}}
+  digest=$(printf '%s\n%s' "$server" "$HERDR_ACTIVE_WORKSPACE_ID" | shasum -a 256) || exit
+  session=$(printf 'quick-w-%.16s' "$digest")
+  directory=${HERDR_ACTIVE_PANE_CWD:-$HOME}
+fi
+cd -P -- "$directory" 2>/dev/null || cd -- "$HOME" || exit
+unset HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH HERDR_CLIENT_SOCKET_PATH HERDR_PANE_ID
+exec env HERDR_CONFIG_PATH="$HOME/dotfiles/herdr/quick-terminal.toml" HERDR_STARTUP_CWD="$PWD" \
+  "${HERDR_BIN_PATH:-herdr}" --session "$session"
+'''
+description = "Toggle quick terminal for this workspace"
+width = "80%"
+height = "70%"
+
+[[keys.command]]
+key = "prefix+shift+q"
+type = "popup"
+command = '''
+cd -- "$HOME" || exit
+unset HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH HERDR_CLIENT_SOCKET_PATH HERDR_PANE_ID
+exec env HERDR_CONFIG_PATH="$HOME/dotfiles/herdr/quick-terminal.toml" HERDR_STARTUP_CWD="$PWD" \
+  "${HERDR_BIN_PATH:-herdr}" --session quick-shared
+'''
+description = "Open shared quick terminal"
+width = "80%"
+height = "70%"
+
+[[keys.command]]
 key = "prefix+shift+t"
 type = "popup"
 command = "tv sesh"
