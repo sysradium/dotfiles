@@ -102,6 +102,12 @@ type = "plugin_action"
 command = "worktrunk.open"
 description = "Worktree: switch / create from default branch"
 
+[[keys.command]]
+key = "prefix+shift+f"
+type = "plugin_action"
+command = "sysradium.fm-tab-titles.name-tab"
+description = "Regenerate the agent tab title with fm"
+
 [ui]
 sidebar_start_collapsed = true
 sidebar_collapsed_mode = "hidden"

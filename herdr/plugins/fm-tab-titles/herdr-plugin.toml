@@ -1,0 +1,20 @@
+id = "sysradium.fm-tab-titles"
+name = "Foundation Model Tab Titles"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Generate short agent tab titles with Pi and the macOS on-device model"
+platforms = ["macos"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["python3", "title.py"]
+
+[[events]]
+on = "tab.focused"
+command = ["python3", "title.py"]
+
+[[actions]]
+id = "name-tab"
+title = "Regenerate the title for this agent tab"
+contexts = ["global"]
+command = ["python3", "title.py"]
